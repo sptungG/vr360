@@ -1,0 +1,9 @@
+.hidden {
+  display: none;
+  opacity: 0;
+  visibility: hidden;
+}
+.ant-tooltip-inner {
+  width: fit-content;
+  height: fit-content;
+}
