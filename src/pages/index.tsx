@@ -3,7 +3,7 @@ import { THREE } from "@/common/three";
 import Pano from "@/components/Pano";
 import { Html, OrbitControls, TransformControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { Button } from "antd";
+import { Button, Typography } from "antd";
 import { Inter } from "next/font/google";
 import { Suspense, useState } from "react";
 
@@ -28,7 +28,7 @@ export default function Home() {
       <Canvas>
         <Suspense fallback={null}>
           <group>
-            <Pano imageUrl="/pano1.jpg" />
+            <Pano imageUrl="/store-pano-1.jpg" />
             {/* ground plane */}
             {isEditing && (
               <mesh position={[0, 0, 0]} rotation={[Math.PI / -2, 0, 0]}>
@@ -39,7 +39,9 @@ export default function Home() {
             {position && (
               <mesh position={position}>
                 <Html center>
-                  <a href="#">{String(position)}</a>
+                  <Typography.Text copyable style={{ fontSize: 16, whiteSpace: "nowrap" }}>
+                    {String(position)}
+                  </Typography.Text>
                 </Html>
               </mesh>
             )}
@@ -66,6 +68,8 @@ export default function Home() {
           rotateSpeed={-0.5}
           makeDefault
           autoRotate={!isEditing}
+          maxDistance={400}
+          minDistance={100}
         />
       </Canvas>
     </StyledWrapper>
