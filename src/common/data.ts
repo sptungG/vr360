@@ -20,7 +20,7 @@ export type TScene = {
 export const SCENES: TScene[] = [
   {
     id: 1,
-    src: "/grodno_belarus_august_2019_full_spherical_seamless_hdri_360_panorama.jpg",
+    src: "/scene-00.jpg",
     hotspots: [
       {
         position: [-323.6924966880152, 90.0618357718875, -361.5822282043567],

@@ -12,6 +12,8 @@ type TPanoSceneProps = {
 const PanoScene = ({ currentScene, setCurrentScene }: TPanoSceneProps) => {
   const uid = useId();
   const texture = useTexture(currentScene.src);
+  texture.wrapS = THREE.RepeatWrapping;
+  texture.repeat.x = -1;
 
   return (
     <mesh position={[0, 0, 0]}>

@@ -13,6 +13,7 @@ import { useId, useState } from "react";
 import DrawerBottom from "../DrawerBottom";
 import Tooltip from "../Tooltip";
 import Avatar from "./Avatar";
+import { useTheme } from "@emotion/react";
 
 type TControlBar01Props = DrawerProps & {};
 
@@ -30,8 +31,9 @@ const ControlBar01 = ({ children, ...props }: TControlBar01Props) => {
 
   return (
     <StyleWrapper
+      open
       width={720}
-      styles={{ mask: { display: "none" }, body: { padding: 12 } }}
+      styles={{ mask: { display: "none" }, body: { padding: 0 } }}
       title={
         <>
           <Flex className="title-wrapper" align="center" gap={2}>
@@ -164,7 +166,6 @@ const ControlBar01 = ({ children, ...props }: TControlBar01Props) => {
           ></Tabs>
         </>
       }
-      open
       {...props}
     >
       {selectedTab === uid + 0 && <Flex>{<></>}</Flex>}

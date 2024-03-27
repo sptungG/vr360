@@ -2,7 +2,7 @@ import { TScene, getSceneById } from "@/common/data";
 import PanoScene from "@/components/PanoScene";
 import * as TComponents from "@/components/templated";
 import styled from "@emotion/styled";
-import { OrbitControls, Preload } from "@react-three/drei";
+import { GizmoHelper, GizmoViewport, OrbitControls, Preload } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 
 import Html from "@/common/Html";
@@ -93,6 +93,10 @@ function Page() {
           // autoRotate={!isEditing || currentScene?.controlProps?.autoRotate}
         />
 
+        <GizmoHelper alignment="bottom-left" margin={[33, 33]}>
+          <GizmoViewport labelColor="white" scale={22} />
+        </GizmoHelper>
+
         <Suspense fallback={null}>
           <Preload all />
           <group>
@@ -111,33 +115,9 @@ function Page() {
             {currentScene.id === 1 && (
               <>
                 <mesh
-                  position={[-323.6924966880152, 90.0618357718875, -361.5822282043567]}
+                  position={[339.6924966880152, 90.0618357718875, 361.5822282043567]}
                   scale={[34, 34, 34]}
-                  rotation={[0, 0.14382110375680413, 0.05]}
-                >
-                  <Html center transform>
-                    <Tooltip title={"Bánh ngon hôm nay"} onOpenChange={onTooltipOpen}>
-                      <BtnHotspot icon={<CakeSliceIcon size={16} />} />
-                    </Tooltip>
-                  </Html>
-                </mesh>
-
-                <mesh
-                  position={[339.50274781179354, 0, -379.31028912809654]}
-                  scale={[33, 33, 33]}
-                  rotation={[0, -0.5, 0]}
-                >
-                  <Html center transform>
-                    <Tooltip title={"MENU chính"} onOpenChange={onTooltipOpen}>
-                      <BtnHotspot icon={<BookOpenTextIcon size={16} />} />
-                    </Tooltip>
-                  </Html>
-                </mesh>
-
-                <mesh
-                  position={[460.54321996649105, -17.38893685199908, -213.0998346416406]}
-                  scale={[22, 22, 22]}
-                  rotation={[0, -0.5, 0]}
+                  rotation={[0, 0.14382110375680413, 0]}
                 >
                   <Html center transform>
                     <Tooltip title={"Gian Coffee"} onOpenChange={onTooltipOpen}>
@@ -146,11 +126,23 @@ function Page() {
                   </Html>
                 </mesh>
 
-                <mesh
-                  position={[164.58167404290856, -29.49116436983485, -400.047670702984]}
-                  scale={[40, 40, 40]}
-                  rotation={[0, 0.04, 0]}
-                >
+                <mesh position={[160, 120, 450]} scale={[30, 30, 30]} rotation={[0, 0.1, 0]}>
+                  <Html center transform>
+                    <Tooltip title={"MENU chính"} onOpenChange={onTooltipOpen}>
+                      <BtnHotspot icon={<BookOpenTextIcon size={16} />} />
+                    </Tooltip>
+                  </Html>
+                </mesh>
+
+                <mesh position={[-388, 84, 320]} scale={[30, 30, 30]} rotation={[0, -0.5, 0]}>
+                  <Html center transform>
+                    <Tooltip title={"Gian Coffee"} onOpenChange={onTooltipOpen}>
+                      <BtnHotspot icon={<CoffeeIcon size={16} />} />
+                    </Tooltip>
+                  </Html>
+                </mesh>
+
+                <mesh position={[85, -10, 500]} scale={[50, 50, 50]} rotation={[0, 0.04, 0]}>
                   <Html center transform>
                     <Tooltip title={"Danh mục chính"} onOpenChange={onTooltipOpen}>
                       <BtnHotspot icon={<LayoutGridIcon fill="currentColor" size={16} />} />
@@ -212,6 +204,7 @@ const StyledWrapper = styled.main`
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
+    width: 100%;
   }
 `;
 
