@@ -7,5 +7,3 @@ declare module "@emotion/react" {
     generatedColors: string[];
   }
 }
-
-export { default as styled } from "@emotion/styled";

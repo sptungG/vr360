@@ -1,40 +1,44 @@
-import { styled } from "@/common/emotion-styled";
-import { Button, Flex } from "antd";
+import styled from "@emotion/styled";
+import { Button, Flex, theme } from "antd";
 
 type TRouteArrow01Props = {
   label?: string;
   toSceneId?: number;
   currentScene?: any;
-  onClick?: (toSceneId: number) => void;
   style?: React.CSSProperties;
+  onClick?: (toSceneId?: number) => void;
+  onMouseOver?: (toSceneId?: number) => void;
+  onMouseOut?: (toSceneId?: number) => void;
 };
 
-const RouteArrow01 = ({ label, toSceneId, onClick, currentScene, style }: TRouteArrow01Props) => {
-  // const {
-  //   token: { colorPrimary },
-  // } = theme.useToken();
+const RouteArrow01 = ({
+  label,
+  toSceneId,
+  currentScene,
+  style,
+  onClick,
+  onMouseOver,
+  onMouseOut,
+}: TRouteArrow01Props) => {
+  const {
+    token: { colorPrimary },
+  } = theme.useToken();
+
   return (
-    <Flex vertical align="center" gap={4}>
-      <Button
-        type="default"
-        onClick={() => {
-          !!toSceneId && onClick?.(toSceneId);
-        }}
-        style={style}
-      >
-        {label}
-      </Button>
+    <StyledWrapper type="default" style={style} onClick={() => onClick?.(toSceneId)}>
       <picture>
         <img src="/arrow3.png" alt="" width={90} />
       </picture>
-    </Flex>
+    </StyledWrapper>
   );
 };
 
-const StyledWrapper = styled(Flex)`
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+const StyledWrapper = styled(Button)`
+  padding: 0;
+  background-color: transparent !important;
+  border: none !important;
+  &:hover {
+  }
 `;
 
 export default RouteArrow01;

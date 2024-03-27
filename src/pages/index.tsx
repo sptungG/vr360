@@ -1,13 +1,30 @@
 import { TScene, getSceneById } from "@/common/data";
-import { styled } from "@/common/emotion-styled";
-import { THREE } from "@/common/three";
 import PanoScene from "@/components/PanoScene";
-import { Html, OrbitControls, Preload, TransformControls } from "@react-three/drei";
+import * as TComponents from "@/components/templated";
+import styled from "@emotion/styled";
+import { OrbitControls, Preload } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { Button, Typography } from "antd";
 
+import Html from "@/common/Html";
+import useSceneState from "@/common/useSceneState";
+import Tooltip from "@/components/Tooltip";
+import BtnHotspot from "@/components/templated/BtnHotspot";
+import ControlBar01 from "@/components/templated/ControlBar01";
+import {
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  BookOpenTextIcon,
+  CakeSliceIcon,
+  CoffeeIcon,
+  LayoutGridIcon,
+} from "lucide-react";
 import { Inter } from "next/font/google";
 import { Suspense, useId, useState } from "react";
+import { useInterval } from "react-use";
+import { Button, Flex } from "antd";
+import { Round360Svg } from "@/components/icons";
+import { AnimatePulse2 } from "@/common/emotion-keyframes";
+import Btn360View from "@/components/templated/Btn360View";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,6 +38,7 @@ const inter = Inter({ subsets: ["latin"] });
 // 535.5591149674218,38.130939248021946,17.735467604367287 tranh treo tường
 // -508.59230855480064,202.7369429709517,-38.327022205039675 cảm biến cháy
 // -508.59230855480064,237.75766607679736,344.0607854064161 thông gió
+// 339.50274781179354,0,-379.31028912809654 menu
 
 // 447.98136357465734,-7.342314498985516,237.5816833533934 chuyển hướng sang bên 01
 
@@ -28,24 +46,39 @@ function Page() {
   const initialScene = getSceneById(1)!;
 
   const uid = useId();
-  const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [position, setPosition] = useState<any>();
   const [currentScene, setCurrentScene] = useState<TScene>(initialScene);
+  const { autoRotate, isViewing, setIsViewing, setAutoRotate } = useSceneState((s) => s);
+  const onTooltipOpen = (o?: boolean) => {
+    if (!!o) setAutoRotate(false);
+    else {
+      setTimeout(() => {
+        setAutoRotate(true);
+      }, 1000);
+    }
+  };
 
   return (
-    <StyledWrapper className={`${inter.className}`}>
-      <div className="actions-br" style={{ zIndex: 20 }}>
-        <Button
-          type="primary"
-          danger={isEditing}
-          size="large"
-          onClick={() => setIsEditing((prev) => !prev)}
-        >
-          {isEditing ? "Hủy chỉnh sửa" : "Chỉnh sửa"}
-        </Button>
+    <StyledWrapper style={{ width: "100%", maxWidth: "100dvw" }} className={`${inter.className}`}>
+      <div className="actions-bc" style={{ zIndex: 20 }}>
+        <ControlBar01 />
       </div>
 
-      <Canvas style={{ zIndex: 0 }} frameloop="demand">
+      <div className="actions-br" style={{ zIndex: 20 }}></div>
+
+      <Flex
+        align="center"
+        justify="space-between"
+        className="actions-360"
+        style={{ zIndex: 20, padding: "0 12px" }}
+      >
+        {isViewing || <Btn360View />}
+      </Flex>
+
+      <Canvas
+        style={{ zIndex: 0 }}
+        // camera={{ lookAt: [447.98136357465734, -7.342314498985516, 237.5816833533934] }}
+        frameloop="demand"
+      >
         <OrbitControls
           key={String(currentScene.src) + String(currentScene?.controlProps)}
           enableZoom
@@ -53,11 +86,11 @@ function Page() {
           enableDamping
           rotateSpeed={-0.5}
           makeDefault
-          // autoRotate={!isEditing}
           maxDistance={499}
           minDistance={100}
           zoomToCursor={false}
-          {...(currentScene?.controlProps || {})}
+          autoRotate={autoRotate}
+          // autoRotate={!isEditing || currentScene?.controlProps?.autoRotate}
         />
 
         <Suspense fallback={null}>
@@ -65,36 +98,88 @@ function Page() {
           <group>
             <PanoScene currentScene={currentScene} setCurrentScene={setCurrentScene} />
 
-            {isEditing && (
-              <mesh position={[0, 0, 0]} rotation={[Math.PI / -2, 0, 0]}>
-                <planeGeometry args={[2000, 2000, 40, 40]} />
-                <meshBasicMaterial wireframe color="white" side={THREE.DoubleSide} />
-              </mesh>
+            {/* <mesh
+              position={[-323.6924966880152, 90.0618357718875, -361.5822282043567]}
+              scale={[30, 30, 30]}
+              rotation={[0, 0.14382110375680413, 0.05]}
+            >
+              <Html center transform>
+
+              </Html>
+            </mesh> */}
+
+            {currentScene.id === 1 && (
+              <>
+                <mesh
+                  position={[-323.6924966880152, 90.0618357718875, -361.5822282043567]}
+                  scale={[34, 34, 34]}
+                  rotation={[0, 0.14382110375680413, 0.05]}
+                >
+                  <Html center transform>
+                    <Tooltip title={"Bánh ngon hôm nay"} onOpenChange={onTooltipOpen}>
+                      <BtnHotspot icon={<CakeSliceIcon size={16} />} />
+                    </Tooltip>
+                  </Html>
+                </mesh>
+
+                <mesh
+                  position={[339.50274781179354, 0, -379.31028912809654]}
+                  scale={[33, 33, 33]}
+                  rotation={[0, -0.5, 0]}
+                >
+                  <Html center transform>
+                    <Tooltip title={"MENU chính"} onOpenChange={onTooltipOpen}>
+                      <BtnHotspot icon={<BookOpenTextIcon size={16} />} />
+                    </Tooltip>
+                  </Html>
+                </mesh>
+
+                <mesh
+                  position={[460.54321996649105, -17.38893685199908, -213.0998346416406]}
+                  scale={[22, 22, 22]}
+                  rotation={[0, -0.5, 0]}
+                >
+                  <Html center transform>
+                    <Tooltip title={"Gian Coffee"} onOpenChange={onTooltipOpen}>
+                      <BtnHotspot icon={<CoffeeIcon size={16} />} />
+                    </Tooltip>
+                  </Html>
+                </mesh>
+
+                <mesh
+                  position={[164.58167404290856, -29.49116436983485, -400.047670702984]}
+                  scale={[40, 40, 40]}
+                  rotation={[0, 0.04, 0]}
+                >
+                  <Html center transform>
+                    <Tooltip title={"Danh mục chính"} onOpenChange={onTooltipOpen}>
+                      <BtnHotspot icon={<LayoutGridIcon fill="currentColor" size={16} />} />
+                    </Tooltip>
+                  </Html>
+                </mesh>
+              </>
             )}
-            {position && (
-              <mesh position={position}>
-                <Html center>
-                  <Typography.Text copyable style={{ fontSize: 16, whiteSpace: "nowrap" }}>
-                    {String(position)}
-                  </Typography.Text>
-                </Html>
-              </mesh>
-            )}
+
+            {!!currentScene?.routes?.length &&
+              currentScene?.routes.map((item, index) => (
+                <mesh
+                  key={uid + "routes" + String(item) + index}
+                  position={item?.position}
+                  scale={item?.scale}
+                  rotation={item?.rotation}
+                >
+                  <Html center transform>
+                    {TComponents[item.componentName]({
+                      ...item.componentProps,
+                      onClick: (toSceneId) => {
+                        setCurrentScene?.(getSceneById(toSceneId)!);
+                      },
+                    })}
+                  </Html>
+                </mesh>
+              ))}
           </group>
         </Suspense>
-
-        {isEditing && <axesHelper args={[1000]} position={[0, 0, 0]} />}
-
-        {isEditing && (
-          <TransformControls
-            onChange={(o) => {
-              const selectedPosition = (o?.target as any)?.object?.position;
-              console.log((o?.target as any)?.object);
-              setPosition(!!selectedPosition ? Object.values(selectedPosition) : undefined);
-            }}
-            mode="translate"
-          />
-        )}
       </Canvas>
     </StyledWrapper>
   );
@@ -102,8 +187,9 @@ function Page() {
 
 const StyledWrapper = styled.main`
   position: relative;
-  width: 100dvw;
   height: 100dvh;
+  margin-left: auto;
+  margin-right: auto;
 
   & > .actions-br {
     position: absolute;
@@ -111,6 +197,21 @@ const StyledWrapper = styled.main`
     right: 0;
     padding: 16px;
     /* color: ${({ theme }) => theme.colorPrimary}; */
+
+    & > .form-wrapper {
+    }
+  }
+  & > .actions-360 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  & > .actions-bc {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
   }
 `;
 

@@ -27,7 +27,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "src/components/icons/index.ts"  ],
   "exclude": [
     "node_modules"
   ]
