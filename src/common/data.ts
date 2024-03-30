@@ -12,6 +12,7 @@ export type TMesh = {
 export type TScene = {
   id: number;
   src: string;
+  label?: string;
   hotspots: TMesh[];
   routes: TMesh[];
   controlProps?: Pick<OrbitControlsProps, "autoRotate" | "zoom0">;
@@ -21,6 +22,7 @@ export const SCENES: TScene[] = [
   {
     id: 1,
     src: "/scene-00.jpg",
+    label: "Sảnh chính",
     hotspots: [
       {
         position: [-323.6924966880152, 90.0618357718875, -361.5822282043567],
@@ -78,7 +80,27 @@ export const SCENES: TScene[] = [
   },
   {
     id: 2,
-    src: "/minsk_belarus_march_25_2015_full_360_panorama_equirectangular_spherical.jpg",
+    src: "/scene-03.jpg",
+    label: "Khu vui chơi trẻ em",
+    hotspots: [],
+    routes: [
+      {
+        position: [447.98136357465734, -7.342314498985516, 237.5816833533934],
+        scale: [33, 33, 33],
+        rotation: [-2.9286674834924535, -1.1968225257984662, -2.9706798966385484],
+        componentName: "RouteArrow01",
+        componentProps: {
+          label: "Trở lại cửa hàng",
+          toSceneId: 1,
+        },
+      },
+    ],
+    controlProps: { autoRotate: true, zoom0: 10 },
+  },
+  {
+    id: 3,
+    src: "/scene-04.jpg",
+    label: "Khu bếp chính",
     hotspots: [],
     routes: [
       {

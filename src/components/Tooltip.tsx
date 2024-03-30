@@ -7,8 +7,17 @@ type TTooltipProps = TooltipProps & {};
 
 const Tooltip = ({ children, ...props }: TTooltipProps) => {
   const { generatedColors } = useTheme();
+
   return (
-    <AntdTooltip color="#fff" overlayInnerStyle={{ color: generatedColors[8] }} {...props}>
+    <AntdTooltip
+      mouseEnterDelay={0.01}
+      mouseLeaveDelay={0.01}
+      color="#fff"
+      overlayInnerStyle={{ color: generatedColors[8] }}
+      arrow={{ pointAtCenter: true }}
+      placement="left"
+      {...props}
+    >
       {children}
     </AntdTooltip>
   );

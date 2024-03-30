@@ -17,6 +17,7 @@ const DrawerBottom = ({
       rootStyle={{}}
       maskClosable={false}
       rootClassName={className}
+      push={false}
       styles={{
         wrapper: {
           width,

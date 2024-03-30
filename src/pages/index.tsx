@@ -2,7 +2,15 @@ import { TScene, getSceneById } from "@/common/data";
 import PanoScene from "@/components/PanoScene";
 import * as TComponents from "@/components/templated";
 import styled from "@emotion/styled";
-import { GizmoHelper, GizmoViewport, OrbitControls, Preload } from "@react-three/drei";
+import {
+  ContactShadows,
+  Environment,
+  GizmoHelper,
+  GizmoViewcube,
+  GizmoViewport,
+  OrbitControls,
+  Preload,
+} from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 
 import Html from "@/common/Html";
@@ -64,7 +72,7 @@ function Page() {
       </div>
 
       <div className="actions-br" style={{ zIndex: 20 }}></div>
-
+{/* 
       <Flex
         align="center"
         justify="space-between"
@@ -72,7 +80,7 @@ function Page() {
         style={{ zIndex: 20, padding: "0 12px" }}
       >
         {isViewing || <Btn360View />}
-      </Flex>
+      </Flex> */}
 
       <Canvas
         style={{ zIndex: 0 }}
@@ -90,12 +98,13 @@ function Page() {
           minDistance={100}
           zoomToCursor={false}
           autoRotate={autoRotate}
+          autoRotateSpeed={1}
           // autoRotate={!isEditing || currentScene?.controlProps?.autoRotate}
         />
 
-        <GizmoHelper alignment="bottom-left" margin={[33, 33]}>
-          <GizmoViewport labelColor="white" scale={22} />
-        </GizmoHelper>
+        {/* <GizmoHelper alignment="bottom-left" margin={[33, 33]}>
+          <GizmoViewport labelColor="white" scale={24} />
+        </GizmoHelper> */}
 
         <Suspense fallback={null}>
           <Preload all />

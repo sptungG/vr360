@@ -25,8 +25,13 @@ const Btn360View = ({}: TBtn360ViewProps) => {
       style={{ height: "fit-content", color: "#fff" }}
       onClick={() => setIsViewing(true)}
     >
-      <Round360Svg className="ld ld-swing infinite" style={{ width: 52, marginBottom: 2 }} />
-      <span className="" style={{ padding: "0 8px", fontSize: 12 }}>Nhấn để xem thêm</span>
+      <Round360Svg
+        className="ld ld-clock infinite"
+        style={{ width: 52, zIndex: -1, marginBottom: 2 }}
+      />
+      <span className="" style={{ padding: "0 8px", fontSize: 12 }}>
+        Nhấn để xem thêm
+      </span>
     </StyledWrapper>
   );
 };

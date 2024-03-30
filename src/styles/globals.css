@@ -7,3 +7,9 @@
   width: fit-content;
   height: fit-content;
 }
+
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
