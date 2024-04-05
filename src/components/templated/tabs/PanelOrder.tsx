@@ -55,7 +55,6 @@ const PanelOrder = ({}: TPanelOrderProps) => {
           columns={[
             {
               key: "imageUrl",
-              fixed: "left",
               width: 96,
               render: (_, item, index) => (
                 <Avatar src={item.imageUrl} size={80} shape="square" style={{ flexShrink: 0 }}>
