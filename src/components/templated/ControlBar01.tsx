@@ -48,6 +48,7 @@ import PanelItems from "./tabs/PanelItems";
 import PanelScenes from "./tabs/PanelScenes";
 import PanelBookingTable from "./tabs/PanelBookingTable";
 import PanelOrder from "./tabs/PanelOrder";
+import { usePrevious } from "react-use";
 
 type TControlBar01Props = DrawerProps & {};
 
@@ -63,7 +64,10 @@ const ControlBar01 = ({ children, ...props }: TControlBar01Props) => {
   const setAutoRotate = useSceneState((s) => s.setAutoRotate);
 
   const [selectedTab, setSelectedTab] = useState<string>("khu-vuc");
+  const prevSelectedTab = usePrevious(selectedTab);
   const [selectedTabPromo, setSelectedTabPromo] = useState<string>("1233");
+  const [count01, setCount01] = useState(1);
+  const [count02, setCount02] = useState(1);
 
   return (
     <>
@@ -111,19 +115,21 @@ const ControlBar01 = ({ children, ...props }: TControlBar01Props) => {
       <StyledTitle className="right" vertical align="end" gap={20} style={{ width: 48 }}>
         <Flex gap={12} vertical>
           <ButtonBadge
-            count={2000}
             type="text"
             size="small"
             style={{ color: colorBgBase }}
             icon={<HeartIcon size={21} />}
+            count={count01}
+            onClick={() => setCount01((p) => p + 1)}
           />
 
           <ButtonBadge
-            count={20000}
             type="text"
             size="small"
             style={{ color: colorBgBase }}
             icon={<MessageCircleMoreIcon size={21} />}
+            count={count02}
+            onClick={() => setCount02((p) => p + 1)}
           />
         </Flex>
 
@@ -275,11 +281,16 @@ const StyledTabsNav01 = styled(Tabs)`
 `;
 
 type TButtonBadgeProps = ButtonProps & { count?: number };
-const ButtonBadge = ({ count, children, icon, ...props }: TButtonBadgeProps) => {
+const ButtonBadge = ({ count = 0, children, icon, ...props }: TButtonBadgeProps) => {
   return (
     <StyleButton01 {...props}>
       {icon}
-      <Badge size="small" overflowCount={999} count={count} />
+      <Badge
+        size="small"
+        overflowCount={999}
+        count={count}
+        styles={{ root: { paddingRight: count > 99 ? 0 : 4 } }}
+      />
     </StyleButton01>
   );
 };
@@ -298,6 +309,7 @@ const StyleButton01 = styled(Button)`
     box-shadow: none;
     background-color: transparent;
     padding: 0;
+    border-radius: 0;
   }
 `;
 

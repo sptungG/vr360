@@ -60,6 +60,9 @@ const StyledSceneTabs = styled(Tabs)`
   }
   & .ant-tabs-tab.ant-tabs-tab-active {
   }
+  & .ant-tabs-nav-operations {
+    display: none !important;
+  }
 `;
 
 export default PanelScenes;

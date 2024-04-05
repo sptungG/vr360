@@ -9,6 +9,54 @@ import { PlusIcon } from "lucide-react";
 import { useTheme } from "@emotion/react";
 import { rgba } from "emotion-rgba";
 
+export const LIST_ITEM = [
+  {
+    id: "1284",
+    imageUrl:
+      "https://burgerking.vn/media/catalog/product/cache/1/small_image/316x/9df78eab33525d08d6e5fb8d27136e95/c/o/combo-chic_n-lover-bbq-2p.jpg",
+    name: "COMBO CHIC'N LOVERS 2P",
+    describe: "2 Miếng Gà Giòn (cay/ không cay) hoặc 2 Cánh Gà BBQ 1 Burger Bò Phô Mai 2 Nước ngọt",
+    originPrice: 125000,
+    currentPrice: 119000,
+  },
+  {
+    id: "1293",
+    imageUrl:
+      "https://burgerking.vn/media/catalog/product/cache/1/small_image/316x/9df78eab33525d08d6e5fb8d27136e95/k/i/king-deli-1_1.jpg",
+    name: "COMBO KING A 99K",
+    describe: "2 Burger junior + 2 Fries S + 2 Drink",
+    originPrice: 99000,
+    currentPrice: 99000,
+  },
+  {
+    id: "1285",
+    imageUrl:
+      "https://burgerking.vn/media/catalog/product/cache/1/small_image/316x/9df78eab33525d08d6e5fb8d27136e95/c/o/combo2-burger-ca_-ho_i-gio_n_1.jpg",
+    name: "COMBO CHARCOAL CRISPY SALMON 168",
+    describe: "1 Burger cá hồi + 1 Burger bò nướng Whopper ( cỡ vừa ) + 2 phô mai que + 2 Đồ uống",
+    originPrice: 168000,
+    currentPrice: 159000,
+  },
+  {
+    id: "1294",
+    imageUrl:
+      "https://burgerking.vn/media/catalog/product/cache/1/small_image/316x/9df78eab33525d08d6e5fb8d27136e95/k/i/king-deli-2.jpg",
+    name: "COMBO KING B 99K",
+    describe: "2 Fried chicken + 1 Fries M + 1 Drink",
+    originPrice: 99000,
+    currentPrice: 99000,
+  },
+  {
+    id: "1240",
+    imageUrl:
+      "https://burgerking.vn/media/catalog/product/cache/1/small_image/316x/9df78eab33525d08d6e5fb8d27136e95/c/o/combo_king_jr_1.jpg",
+    name: "COMBO King Jr",
+    describe: "1 Burger BBQ + 1 Khoai Tây Chiên nhỏ + 1 Đồ uống",
+    originPrice: 125000,
+    currentPrice: 125000,
+  },
+];
+
 type TPanelItemsProps = {};
 
 const PanelItems = ({}: TPanelItemsProps) => {
@@ -54,55 +102,7 @@ const PanelItems = ({}: TPanelItemsProps) => {
       ></StyledTabs01>
 
       <StyledProductList className="item-list" wrap="wrap" justify="start" gap={6}>
-        {[
-          {
-            id: "1284",
-            imageUrl:
-              "https://burgerking.vn/media/catalog/product/cache/1/small_image/316x/9df78eab33525d08d6e5fb8d27136e95/c/o/combo-chic_n-lover-bbq-2p.jpg",
-            name: "COMBO CHIC'N LOVERS 2P",
-            describe:
-              "2 Miếng Gà Giòn (cay/ không cay) hoặc 2 Cánh Gà BBQ 1 Burger Bò Phô Mai 2 Nước ngọt",
-            originPrice: 125000,
-            currentPrice: 119000,
-          },
-          {
-            id: "1293",
-            imageUrl:
-              "https://burgerking.vn/media/catalog/product/cache/1/small_image/316x/9df78eab33525d08d6e5fb8d27136e95/k/i/king-deli-1_1.jpg",
-            name: "COMBO KING A 99K",
-            describe: "2 Burger junior + 2 Fries S + 2 Drink",
-            originPrice: 99000,
-            currentPrice: 99000,
-          },
-          {
-            id: "1285",
-            imageUrl:
-              "https://burgerking.vn/media/catalog/product/cache/1/small_image/316x/9df78eab33525d08d6e5fb8d27136e95/c/o/combo2-burger-ca_-ho_i-gio_n_1.jpg",
-            name: "COMBO CHARCOAL CRISPY SALMON 168",
-            describe:
-              "1 Burger cá hồi + 1 Burger bò nướng Whopper ( cỡ vừa ) + 2 phô mai que + 2 Đồ uống",
-            originPrice: 168000,
-            currentPrice: 159000,
-          },
-          {
-            id: "1294",
-            imageUrl:
-              "https://burgerking.vn/media/catalog/product/cache/1/small_image/316x/9df78eab33525d08d6e5fb8d27136e95/k/i/king-deli-2.jpg",
-            name: "COMBO KING B 99K",
-            describe: "2 Fried chicken + 1 Fries M + 1 Drink",
-            originPrice: 99000,
-            currentPrice: 99000,
-          },
-          {
-            id: "1240",
-            imageUrl:
-              "https://burgerking.vn/media/catalog/product/cache/1/small_image/316x/9df78eab33525d08d6e5fb8d27136e95/c/o/combo_king_jr_1.jpg",
-            name: "COMBO King Jr",
-            describe: "1 Burger BBQ + 1 Khoai Tây Chiên nhỏ + 1 Đồ uống",
-            originPrice: 125000,
-            currentPrice: 125000,
-          },
-        ].map((item, index) => (
+        {LIST_ITEM.map((item, index) => (
           <div key={uid + "PRODUCTS" + item.id} className="item">
             <Avatar
               src={item.imageUrl}
@@ -217,8 +217,8 @@ const StyledTabs01 = styled(Tabs)`
 `;
 
 const StyledPanel01 = styled(ScrollBar)`
-  max-height: calc(50dvh + 60px);
-  height: 100%;
+  height: 500px;
+  /* height: 100%; */
   overflow-y: auto;
   & .nav-top-wrapper {
   }

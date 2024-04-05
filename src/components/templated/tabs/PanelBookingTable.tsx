@@ -12,6 +12,8 @@ const PanelBookingTable = ({}: TPanelBookingTableProps) => {
   );
 };
 
-const StyledWrapper = styled.div``;
+const StyledWrapper = styled.div`
+  height: 500px;
+`;
 
 export default PanelBookingTable;

@@ -2,9 +2,28 @@ import DrawerBottom from "@/components/DrawerBottom";
 import Image from "@/components/Image";
 import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
-import { Button, Flex, Tabs, Typography } from "antd";
-import { ChevronLeft } from "lucide-react";
-import React, { useState } from "react";
+import { Tabs, Typography } from "antd";
+import { useState } from "react";
+
+const DATA = [
+  {
+    id: "1233",
+    imageUrl:
+      "https://www.burgerking.com.my/upload/image/offer/128/J1004748_Raya2024-Campaign%28Jan%2724%29_DigitalAdaptaions_WebPanel_900x480.jpg",
+    name: "TRIPLE CHEESE SPICY TENDERCRISP",
+  },
+  {
+    id: "1234",
+    imageUrl: "https://burgerking.vn/media/news/image/b/o/bogo-bannerweb-m_c-km.jpg",
+    name: "BUY 1 GET 1 - EVERY THURSDAY",
+  },
+  {
+    id: "1235",
+    imageUrl:
+      "https://www.burgerking.com.my/upload/image/offer/111/Web%20Panel_900px%20x%20480px%20%282%29.jpg",
+    name: "VALUE COMBO",
+  },
+];
 
 type TPanelPromoProps = {};
 
@@ -15,49 +34,30 @@ const PanelPromo = ({}: TPanelPromoProps) => {
 
   return (
     <>
-      <Flex vertical>
-        <StyledPromoTabs
-          tabBarGutter={0}
-          tabBarStyle={{ margin: 0 }}
-          onTabClick={(k) => setSelectedTabPromo(k)}
-          items={[
-            {
-              id: "1233",
-              imageUrl:
-                "https://www.burgerking.com.my/upload/image/offer/128/J1004748_Raya2024-Campaign%28Jan%2724%29_DigitalAdaptaions_WebPanel_900x480.jpg",
-              name: "TRIPLE CHEESE SPICY TENDERCRISP",
-            },
-            {
-              id: "1234",
-              imageUrl: "https://burgerking.vn/media/news/image/b/o/bogo-bannerweb-m_c-km.jpg",
-              name: "BUY 1 GET 1 - EVERY THURSDAY",
-            },
-            {
-              id: "1235",
-              imageUrl:
-                "https://www.burgerking.com.my/upload/image/offer/111/Web%20Panel_900px%20x%20480px%20%282%29.jpg",
-              name: "VALUE COMBO",
-            },
-          ].map((item, index) => ({
-            key: String(item.id),
-            label: (
-              <>
-                <Image src={item.imageUrl} alt=""></Image>
-                <div className="actions-b">
-                  <Typography.Paragraph
-                    strong
-                    className="title"
-                    style={{ fontSize: 14, color: "#fff", margin: 0, lineHeight: 1.1 }}
-                    ellipsis={{ rows: 2 }}
-                  >
-                    {item.name}
-                  </Typography.Paragraph>
-                </div>
-              </>
-            ),
-          }))}
-        />
-      </Flex>
+      <StyledPromoTabs
+        tabBarGutter={0}
+        tabBarStyle={{ margin: 0 }}
+        onTabClick={(k) => setSelectedTabPromo(k)}
+        items={DATA.map((item, index) => ({
+          key: String(item.id),
+          label: (
+            <>
+              <Image src={item.imageUrl} alt=""></Image>
+              <div className="actions-b">
+                <Typography.Paragraph
+                  strong
+                  className="title"
+                  style={{ fontSize: 14, color: "#fff", margin: 0, lineHeight: 1.1 }}
+                  ellipsis={{ rows: 2 }}
+                >
+                  {item.name}
+                </Typography.Paragraph>
+              </div>
+            </>
+          ),
+        }))}
+      />
+
       <StyleDrawerWrapper
         destroyOnClose
         open={selectedTabPromo === "1234"}
@@ -145,6 +145,9 @@ const StyledPromoTabs = styled(Tabs)`
     }
   }
   & .ant-tabs-tab.ant-tabs-tab-active {
+  }
+  & .ant-tabs-nav-operations {
+    display: none !important;
   }
 `;
 
