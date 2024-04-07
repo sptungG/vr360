@@ -66,13 +66,13 @@ function Page() {
   };
 
   return (
-    <StyledWrapper style={{ width: "100%", maxWidth: "100dvw" }} className={`${inter.className}`}>
+    <StyledWrapper style={{ width: "100%", maxWidth: "732px" }} className={`${inter.className}`}>
       <div className="actions-bc" style={{ zIndex: 20 }}>
         <ControlBar01 />
       </div>
 
       <div className="actions-br" style={{ zIndex: 20 }}></div>
-{/* 
+      {/* 
       <Flex
         align="center"
         justify="space-between"
