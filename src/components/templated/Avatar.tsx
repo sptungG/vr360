@@ -10,21 +10,18 @@ const Avatar = ({ icon, children, style, ...props }: TAvatarProps) => {
     token: { colorPrimaryBorder, colorPrimaryBg },
   } = theme.useToken();
   return (
-    <AntdAvatar
-      icon={icon}
-      style={{
-        backgroundColor: colorPrimaryBorder,
-        borderColor: colorPrimaryBg,
-        ...style,
-      }}
-      {...props}
-    >
+    <StyledWrapper icon={icon} style={style} {...props}>
       {children}
-    </AntdAvatar>
+    </StyledWrapper>
   );
 };
 
-const StyledWrapper = styled(AntdAvatar)``;
+const StyledWrapper = styled(AntdAvatar)`
+  object-fit: cover;
+  & > img {
+    object-fit: inherit;
+  }
+`;
 
 type TAvatarGroupProps = GroupProps & { children?: React.ReactNode };
 export const AvatarGroup = ({ children, maxStyle, ...props }: TAvatarGroupProps) => {

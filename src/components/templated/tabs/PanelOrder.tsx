@@ -9,6 +9,7 @@ import {
   Flex,
   Form,
   Input,
+  Radio,
   Segmented,
   Table,
   Tabs,
@@ -16,7 +17,14 @@ import {
 } from "antd";
 import { rgba } from "emotion-rgba";
 import { MinusOutlined, PlusOutlined, DeleteOutlined } from "@ant-design/icons";
-import { AlbumIcon, MapPinIcon, PackageCheckIcon } from "lucide-react";
+import {
+  AlbumIcon,
+  HandCoins,
+  HandCoinsIcon,
+  MapPinIcon,
+  PackageCheckIcon,
+  WalletCardsIcon,
+} from "lucide-react";
 import React from "react";
 import Avatar from "../Avatar";
 import { formatCurrency, formatNumber } from "@/common/utils";
@@ -41,12 +49,13 @@ const PanelOrder = ({}: TPanelOrderProps) => {
   return (
     <StyledWrapper>
       <Card size="small" styles={{ body: { padding: 0 } }}>
-        <Table
+        <StyledTable
           size="small"
           showHeader={false}
           dataSource={LIST_ITEM}
           pagination={false}
           scroll={{ x: "100%" }}
+          tableLayout="auto"
           style={{
             borderRadius: "8px 8px 0 0",
             overflow: "hidden",
@@ -55,7 +64,6 @@ const PanelOrder = ({}: TPanelOrderProps) => {
           columns={[
             {
               key: "imageUrl",
-              width: 96,
               render: (_, item, index) => (
                 <Avatar src={item.imageUrl} size={80} shape="square" style={{ flexShrink: 0 }}>
                   {index + 1}
@@ -64,15 +72,15 @@ const PanelOrder = ({}: TPanelOrderProps) => {
             },
             {
               key: "id",
-              width: 400,
               render: (_, item) => (
-                <Flex vertical style={{ margin: "0 0 0 -8px", height: 80 }}>
+                <Flex vertical style={{ margin: "0 0 0 -8px", height: 80, minWidth: 320 }}>
                   <Typography.Title level={5} ellipsis style={{ margin: 0, lineHeight: 1.2 }}>
                     {item.name}
                   </Typography.Title>
                   <Typography.Paragraph
                     type="secondary"
                     style={{ margin: "0 0 6px", lineHeight: 1.25 }}
+                    ellipsis={{ rows: 3 }}
                   >
                     {item.describe}
                   </Typography.Paragraph>
@@ -104,9 +112,9 @@ const PanelOrder = ({}: TPanelOrderProps) => {
             {
               key: "actions",
               fixed: "right",
-              width: 88,
+              width: 72,
               render: (_, item, index) => (
-                <StyledActionsCell vertical gap={12} style={{ margin: "0 0 -4px 0" }}>
+                <StyledActionsCell vertical gap={12} style={{ margin: "0 0 -4px 0", width: 72 }}>
                   <Badge
                     size="small"
                     overflowCount={999}
@@ -141,12 +149,12 @@ const PanelOrder = ({}: TPanelOrderProps) => {
             },
           ]}
           footer={() => (
-            <StyledSummary align="center" justify="flex-end" gap={8}>
+            <Flex align="center" justify="flex-end" gap={8}>
               <Typography.Text type="secondary">Tạm tính:</Typography.Text>
               <Typography.Text strong style={{ fontSize: 18 }}>
                 {formatCurrency(119000)}
               </Typography.Text>
-            </StyledSummary>
+            </Flex>
           )}
         />
 
@@ -199,6 +207,66 @@ const PanelOrder = ({}: TPanelOrderProps) => {
                       <Input.TextArea />
                     </Form.Item>
 
+                    <Typography.Title type="secondary" level={5} style={{ margin: "0 0 8px" }}>
+                      Phương thức thanh toán:
+                    </Typography.Title>
+
+                    <Form.Item name={"paymentMethod"}>
+                      <StyledRadio02>
+                        <Radio.Button value={1}>
+                          <Flex gap={8} align="center">
+                            <Avatar
+                              size={44}
+                              icon={<HandCoinsIcon size={22} />}
+                              style={{
+                                color: colorPrimary,
+                                background: rgba(colorPrimary, 0.05),
+                                borderColor: rgba(colorPrimary, 0.1),
+                              }}
+                            ></Avatar>
+                            <Typography.Text strong style={{ color: "inherit" }}>
+                              Thanh toán khi nhận hàng
+                            </Typography.Text>
+                          </Flex>
+                        </Radio.Button>
+
+                        <Radio.Button value={2}>
+                          <Flex gap={8} align="center">
+                            <Avatar
+                              size={44}
+                              src={
+                                "https://www.onepay.vn/wp-content/uploads/2022/01/Logo_OnePay.svg"
+                              }
+                              icon={<WalletCardsIcon size={22} />}
+                              style={{ objectFit: "contain", background: "#e6f4ff" }}
+                            ></Avatar>
+                            <Flex vertical>
+                              <Typography.Text strong style={{ color: "inherit" }}>
+                                Thanh toán qua OnePay
+                              </Typography.Text>
+                              <Typography.Text type="secondary">
+                                Thanh toán online qua thẻ
+                              </Typography.Text>
+                            </Flex>
+                          </Flex>
+                        </Radio.Button>
+
+                        <Radio.Button value={3}>
+                          <Flex gap={8} align="center">
+                            <Avatar
+                              size={44}
+                              src="https://www.onepay.vn/wp-content/uploads/2021/12/Group-198.png"
+                              icon={<WalletCardsIcon size={22} />}
+                              style={{ background: "#fff0f6" }}
+                            ></Avatar>
+                            <Typography.Text strong style={{ color: "inherit" }}>
+                              Thanh toán qua Momo
+                            </Typography.Text>
+                          </Flex>
+                        </Radio.Button>
+                      </StyledRadio02>
+                    </Form.Item>
+
                     <Button block type="primary" size="large" style={{ margin: "0 0 8px" }}>
                       Xác nhận đơn hàng
                     </Button>
@@ -224,16 +292,48 @@ const PanelOrder = ({}: TPanelOrderProps) => {
   );
 };
 
-const StyledSummary = styled(Flex)`
-  position: relative;
-  width: 100%;
-  & .ant-badge .ant-badge-count {
-    box-shadow: none;
-    background-color: transparent;
-    padding: 0;
+const StyledRadio02 = styled(Radio.Group)`
+  --f-columns: 1;
+  --f-gap: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: calc(-1 * var(--f-gap));
+  margin-bottom: calc(-1 * var(--f-gap));
+  & > * {
+    margin-left: var(--f-gap);
+    margin-bottom: var(--f-gap);
+    width: calc((100% / var(--f-columns) - var(--f-gap)));
+    border: 1px solid rgba(0, 0, 0, 0.15) !important;
+    border-radius: 8px;
+    padding: 8px;
+    height: auto;
+    min-height: 60px;
+    &::before {
+      display: none !important;
+    }
+    &.ant-radio-button-wrapper-checked {
+      border-color: currentColor !important;
+    }
+  }
+  @media screen and (min-width: 768px) {
+    --f-columns: 2;
+    --f-gap: 8px;
+  }
+`;
+
+const StyledTable = styled(Table)`
+  & .ant-table-footer {
+    position: relative;
+    width: 100%;
     border-radius: 0;
-    color: ${({ theme }) => theme.colorPrimary};
-    font-size: 18px;
+    & .ant-badge .ant-badge-count {
+      box-shadow: none;
+      background-color: transparent;
+      padding: 0;
+      border-radius: 0;
+      color: ${({ theme }) => theme.colorPrimary};
+      font-size: 18px;
+    }
   }
 `;
 
