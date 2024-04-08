@@ -101,7 +101,7 @@ const PanelItems = ({}: TPanelItemsProps) => {
         }))}
       ></StyledTabs01>
 
-      <StyledProductList className="item-list" wrap="wrap" justify="start" gap={6}>
+      <StyledProductList className="item-list">
         {LIST_ITEM.map((item, index) => (
           <div key={uid + "PRODUCTS" + item.id} className="item">
             <Avatar
@@ -121,12 +121,12 @@ const PanelItems = ({}: TPanelItemsProps) => {
             <Typography.Paragraph
               className="item-describe"
               ellipsis={{ rows: 2 }}
-              style={{ lineHeight: 1.1, margin: "auto 0 4px" }}
+              style={{ lineHeight: 1.1, margin: "0 0 4px" }}
             >
               {item.describe}
             </Typography.Paragraph>
 
-            <Flex justify="space-between" align="flex-end">
+            <Flex justify="space-between" align="flex-end" style={{ marginTop: "auto" }}>
               <Flex vertical>
                 {item.currentPrice !== item.originPrice && (
                   <Typography.Text type="secondary" delete style={{ fontSize: 13, lineHeight: 1 }}>
@@ -275,9 +275,21 @@ const StyledPanel01 = styled(ScrollBar)`
 const StyledProductList = styled(Flex)`
   padding: 6px;
   background-color: rgba(240, 235, 229, 0.01);
+  --f-columns: 2;
+  --f-gap: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: calc(-1 * var(--f-gap));
+  margin-bottom: calc(-1 * var(--f-gap));
+  @media screen and (min-width: 768px) {
+    --f-columns: 3;
+    --f-gap: 6px;
+  }
+
   & > .item {
-    width: calc(50% - 3px);
-    margin-bottom: 6px;
+    margin-left: var(--f-gap);
+    margin-bottom: var(--f-gap);
+    width: calc((100% / var(--f-columns) - var(--f-gap)));
     display: flex;
     flex-direction: column;
     & .item-imageUrl {
