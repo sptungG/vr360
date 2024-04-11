@@ -37,6 +37,7 @@ const ControlCurtain = ({}: TControlCurtainProps) => {
           format={"HH:mm"}
           minuteStep={5}
           showNow={false}
+          inputReadOnly
         />
       </Form.Item>
 
