@@ -22,6 +22,8 @@ import {
   useControlStateLight,
 } from "@/components/templated/controls/ControlLight";
 import { BtnHotpotAirCond } from "@/components/templated/controls/ControlAirCond";
+import Image from "next/image";
+import { TransformControls } from "@react-three/drei";
 
 const ControlBar01 = dynamic(() => import("@/components/templated/ControlBar01"), { ssr: false });
 
@@ -35,7 +37,7 @@ function Page() {
     IDS.length > 1 ? LIST_SCENE_01[+IDS[0]]?.hotpots?.[+IDS[1]].src : LIST_SCENE_01[+IDS[0]].src;
 
   const { autoRotate, setAutoRotate } = useSceneState((s) => s);
-  const { setIsOpen, setCurrentTab } = useControlState((s) => s);
+  const { open, setIsOpen, setCurrentTab } = useControlState((s) => s);
 
   const { config: configLight } = useControlStateLight((s) => s);
 
@@ -44,7 +46,7 @@ function Page() {
       setAutoRotate(false);
       setTimeout(() => {
         setAutoRotate(true);
-      }, 1000);
+      }, 1500);
     }
   };
 
@@ -69,7 +71,10 @@ function Page() {
           hidden={!configLight?.open}
           key={String(configLight)}
         >
-          <BtnHotpotLightTop onClick={() => handleOpenControl("DEN")} />
+          <BtnHotpotLightTop
+            onTooltipOpen={onTooltipOpen}
+            onClick={() => handleOpenControl("DEN")}
+          />
         </SpotLight>
 
         {/* HOTPOT */}
@@ -78,11 +83,14 @@ function Page() {
           <Html center transform>
             <StyledMarker01 href={"/master-bedroom/0/0"}>
               <Flex vertical>
-                <Avatar
-                  size={100}
-                  rootClassName="thumbnail"
+                <Image
+                  className="thumbnail"
                   src={LIST_SCENE_01[0].hotpots![0].src}
-                ></Avatar>
+                  alt=""
+                  width={100}
+                  height={100}
+                  quality={10}
+                ></Image>
                 <MarkerSvg style={{ width: 125 }} />
               </Flex>
             </StyledMarker01>
@@ -106,6 +114,22 @@ function Page() {
               onClick={() => handleOpenControl("DIEU-HOA")}
               onTooltipOpen={onTooltipOpen}
             />
+          </Html>
+        </mesh>
+
+        <mesh position={[-280, 110, 390]} scale={[33, 33, 33]} rotation={[-0, Math.PI * 0.8, 0]}>
+          <Html center transform>
+            <StyledVideo01 style={{ height: 220 }}>
+              <video
+                src={"https://yoolife.vn/v1/header-banner-1.mp4"}
+                autoPlay
+                preload="metadata"
+                disablePictureInPicture
+                muted
+                loop
+                controlsList="nodownload noremoteplayback noplaybackrate foobar"
+              ></video>
+            </StyledVideo01>
           </Html>
         </mesh>
 
@@ -135,11 +159,21 @@ const StyledMarker01 = styled(Link)`
   padding: 0;
   margin: 0;
   cursor: pointer;
-  & .thumbnail {
+  & img.thumbnail {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
     top: 10px;
+    border-radius: 100rem;
+  }
+`;
+
+const StyledVideo01 = styled.div`
+  border: 2px solid #000;
+  height: fit-content;
+  & video {
+    height: 100%;
+    object-fit: contain;
   }
 `;
 

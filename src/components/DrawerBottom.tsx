@@ -22,6 +22,7 @@ const DrawerBottom = ({
         wrapper: {
           width,
           height: "fit-content",
+          minHeight: 142,
           margin: "0 auto",
           ...wrapper,
         },

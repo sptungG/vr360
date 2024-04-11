@@ -16,7 +16,7 @@ type TState = {
 
 const useControlState = create<TState>()((set) => ({
   config: { color: "#fff1b8", autoOnOff: true, offTime: undefined, open: true },
-  setConfig: (newState) => set((s) => ({ ...s, config: newState }), true),
+  setConfig: (newState) => set({ config: newState }),
 }));
 
 type TControlLightProps = {};
@@ -88,7 +88,7 @@ const StyledRadioLightModes = styled(Radio.Group)``;
 export const BtnHotpotLightTop = ({ onClick, onTooltipOpen }: any) => {
   const { config } = useControlState((s) => s);
   return (
-    <Tooltip title={"Đèn trần"} onOpenChange={onTooltipOpen}>
+    <Tooltip title={"Đèn trần"} afterOpenChange={onTooltipOpen}>
       <StyledWrapper key={String(config)}>
         <BtnHotspot
           onClick={onClick}

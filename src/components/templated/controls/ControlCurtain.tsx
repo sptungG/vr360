@@ -10,7 +10,7 @@ type TState = {
 
 export const useControlState = create<TState>()((set) => ({
   config: { open: false },
-  setConfig: (newState) => set((s) => ({ ...s, config: newState }), true),
+  setConfig: (newState) => set({ config: newState }),
 }));
 
 type TControlCurtainProps = {};

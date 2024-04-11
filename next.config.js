@@ -1,18 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: false,
+  reactStrictMode: true,
   transpilePackages: ["three"],
   swcMinify: process.env.NODE_ENV === "production",
   compress: process.env.NODE_ENV === "production",
-  redirects: async () => {
-    return [
-      {
-        source: "/",
-        destination: "/master-bedroom/0",
-        permanent: false,
-      },
-    ];
-  },
   webpack: (config) => {
     config.module.rules.push({
       test: /\.svg$/i,

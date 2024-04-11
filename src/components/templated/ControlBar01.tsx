@@ -145,6 +145,7 @@ const StyledWrapper = styled.div`
   margin-right: auto;
   width: 100%;
   max-width: 720px;
+  z-index: 10000;
 `;
 
 const StyledTitle = styled(Flex)`

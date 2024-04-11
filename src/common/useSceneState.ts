@@ -36,7 +36,7 @@ type TState = {
 
 const useSceneState01 = create<TState>()((set) => ({
   id: 1,
-  autoRotate: false,
+  autoRotate: true,
   isViewing: false,
   setAutoRotate: (s) => set({ autoRotate: !!s }),
   setIsViewing: (s) => set({ autoRotate: true, isViewing: !!s }),

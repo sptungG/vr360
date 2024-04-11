@@ -1,7 +1,9 @@
 import { SCENES } from "@/common/data";
 import { NImage } from "@/components/Image";
+import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
-import { Flex, Tabs, Typography } from "antd";
+import { Badge, Flex, Tabs, Typography } from "antd";
+import { EyeIcon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
@@ -14,6 +16,8 @@ const PanelScenes = ({ items = [], parentName }: TPanelScenesProps) => {
     pathname,
   } = useRouter();
   const IDS = id || ["0"];
+
+  const { generatedColors } = useTheme();
 
   return (
     <StyledSceneTabs
@@ -30,6 +34,14 @@ const PanelScenes = ({ items = [], parentName }: TPanelScenesProps) => {
                 <Typography.Text strong className="title" style={{ color: "#fff" }}>
                   {item.label}
                 </Typography.Text>
+              </div>
+
+              <div className="actions-tr">
+                <Badge
+                  status="processing"
+                  text="Đang xem"
+                  styles={{ root: { color: generatedColors[4], fontSize: 12 } }}
+                />
               </div>
             </Flex>
           </Link>
@@ -68,8 +80,26 @@ const StyledSceneTabs = styled(Tabs)`
         white-space: normal;
       }
     }
+    & .actions-tr {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 0px 4px 0 0;
+      display: none;
+      & .ant-badge-status-processing {
+        color: ${({ theme }) => theme.colorPrimary};
+        background-color: ${({ theme }) => theme.colorPrimary};
+      }
+      & .ant-badge-status-text {
+        font-size: 12px;
+        color: ${({ theme }) => theme.generatedColors[7]};
+      }
+    }
   }
   & .ant-tabs-tab.ant-tabs-tab-active {
+    & .actions-tr {
+      display: flex;
+    }
   }
   & .ant-tabs-nav-operations {
     display: none !important;

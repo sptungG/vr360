@@ -16,7 +16,7 @@ type TState = {
 
 export const useControlState = create<TState>()((set) => ({
   config: { mode: 1, temperature: 23, fanSpeed: 2, open: true },
-  setConfig: (newState) => set((s) => ({ ...s, config: newState }), true),
+  setConfig: (newState) => set({ config: newState }),
 }));
 
 type TControlAirCondProps = {};

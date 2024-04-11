@@ -8,6 +8,7 @@ import ControlAirCond from "./ControlAirCond";
 import ControlCurtain from "./ControlCurtain";
 import { If } from "@uiw/react-only-when";
 import { CloseOutlined } from "@ant-design/icons";
+import useSceneState01 from "@/common/useSceneState";
 
 type TState = {
   open?: boolean;
@@ -25,10 +26,17 @@ export const useControlState = create<TState>()((set) => ({
 
 type TControlPopoverProps = Pick<PopoverProps, "children"> & {};
 const ControlPopover = ({ children }: TControlPopoverProps) => {
+  const { autoRotate, setAutoRotate } = useSceneState01((s) => s);
   const { open, setIsOpen, currentTab, setCurrentTab } = useControlState((s) => s);
   return (
     <Popover
       open={open}
+      afterOpenChange={(o) => {
+        if (!!o) {
+          setAutoRotate(false);
+        }
+      }}
+      destroyTooltipOnHide
       placement="topLeft"
       trigger={["click"]}
       arrow={{ pointAtCenter: true }}
@@ -37,7 +45,7 @@ const ControlPopover = ({ children }: TControlPopoverProps) => {
       mouseLeaveDelay={0.01}
       content={
         <StyledWrapper vertical>
-          <Flex className="" justify="space-between" style={{margin: "0 0 8px"}}>
+          <Flex className="" justify="space-between" style={{ margin: "0 0 8px" }}>
             <Typography.Title level={3} style={{ margin: 0, fontSize: 16 }}>
               Bộ điều khiển
             </Typography.Title>
