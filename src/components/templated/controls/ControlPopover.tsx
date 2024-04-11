@@ -87,38 +87,36 @@ export const ControlActions = () => {
     setCurrentTab(t);
   };
   return (
-    <>
-      <Flex align="center">
-        <Flex align="center" style={{ margin: "0 4px 0 0" }}>
-          <ControlPopover>
-            <BtnControl className="btn btn-00" icon={<Settings2Icon size={18} />}></BtnControl>
-          </ControlPopover>
-        </Flex>
-        <StyledActions align="center" gap={2}>
-          <BtnControl
-            className={`btn btn-01 ${currentTab === "DEN" ? " btn-active" : ""}`}
-            icon={<Light01Svg fill="currentColor" style={{ width: 20, margin: "0 0 -2px" }} />}
-            onClick={() => handleOpenControl("DEN")}
-          >
-            Độ sáng
-          </BtnControl>
-          <BtnControl
-            className={`btn btn-01 ${currentTab === "DIEU-HOA" ? " btn-active" : ""}`}
-            icon={<AirVentIcon strokeWidth={1.2} color="currentColor" size={18} />}
-            onClick={() => handleOpenControl("DIEU-HOA")}
-          >
-            Điều hòa
-          </BtnControl>
-          <BtnControl
-            className={`btn btn-01 ${currentTab === "REM" ? " btn-active" : ""}`}
-            icon={<CurtainSvg fill="currentColor" style={{ width: 16 }} />}
-            onClick={() => handleOpenControl("REM")}
-          >
-            Rèm cửa
-          </BtnControl>
-        </StyledActions>
+    <StyledActions align="center">
+      <Flex align="center" style={{ margin: "0 4px 0 0" }}>
+        <ControlPopover>
+          <BtnControl className="btn btn-00" icon={<Settings2Icon size={18} />}></BtnControl>
+        </ControlPopover>
       </Flex>
-    </>
+      <Flex align="center" gap={2}>
+        <BtnControl
+          className={`btn btn-01 ${currentTab === "DEN" ? " btn-active" : ""}`}
+          icon={<Light01Svg fill="currentColor" style={{ width: 20, margin: "0 0 -2px" }} />}
+          onClick={() => handleOpenControl("DEN")}
+        >
+          Độ sáng
+        </BtnControl>
+        <BtnControl
+          className={`btn btn-01 ${currentTab === "DIEU-HOA" ? " btn-active" : ""}`}
+          icon={<AirVentIcon strokeWidth={1.2} color="currentColor" size={18} />}
+          onClick={() => handleOpenControl("DIEU-HOA")}
+        >
+          Điều hòa
+        </BtnControl>
+        <BtnControl
+          className={`btn btn-01 ${currentTab === "REM" ? " btn-active" : ""}`}
+          icon={<CurtainSvg fill="currentColor" style={{ width: 16 }} />}
+          onClick={() => handleOpenControl("REM")}
+        >
+          Rèm cửa
+        </BtnControl>
+      </Flex>
+    </StyledActions>
   );
 };
 const StyledActions = styled(Flex)`
