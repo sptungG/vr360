@@ -16,7 +16,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useId } from "react";
 import { BtnHotspot } from "@/components/templated/controls/BtnControl";
-import { useControlState } from "@/components/templated/controls/ControlPopover";
+import { ControlActions, useControlState } from "@/components/templated/controls/ControlPopover";
 import {
   BtnHotpotLightTop,
   useControlStateLight,
@@ -59,7 +59,13 @@ function Page() {
   if (!src) return <div></div>;
 
   return (
-    <PanoLayout src={src} actions01={<ControlBar01 />} autoRotate={autoRotate}>
+    <PanoLayout
+      src={src}
+      actions01={
+        <ControlBar01 extraTitle={IDS.length === 1 && IDS[0] === "0" && <ControlActions />} />
+      }
+      autoRotate={autoRotate}
+    >
       <If condition={IDS.length === 1 && IDS[0] === "0"}>
         {/* LIGHTS */}
 

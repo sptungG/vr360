@@ -14,9 +14,9 @@ import { BtnControl } from "./controls/BtnControl";
 import { useRouter } from "next/router";
 import { If } from "@uiw/react-only-when";
 
-type TControlBar01Props = DrawerProps & {};
+type TControlBar01Props = DrawerProps & { extraTitle?: React.ReactNode };
 
-const ControlBar01 = ({ children, ...props }: TControlBar01Props) => {
+const ControlBar01 = ({ children, extraTitle, ...props }: TControlBar01Props) => {
   const uid = useId();
   const [form] = Form.useForm();
   const {
@@ -41,36 +41,7 @@ const ControlBar01 = ({ children, ...props }: TControlBar01Props) => {
   return (
     <StyledWrapper id={uid + "WRAPPER"}>
       <StyledTitle className="left" align="end" gap={20} style={{ bottom: 148 }}>
-        <Flex align="center">
-          <Flex align="center" style={{ margin: "0 4px 0 0" }}>
-            <ControlPopover>
-              <BtnControl className="btn btn-00" icon={<Settings2Icon size={18} />}></BtnControl>
-            </ControlPopover>
-          </Flex>
-          <Flex align="center" gap={2}>
-            <BtnControl
-              className={`btn btn-01 ${currentTab === "DEN" ? " btn-active" : ""}`}
-              icon={<Light01Svg fill="currentColor" style={{ width: 20, margin: "0 0 -2px" }} />}
-              onClick={() => handleOpenControl("DEN")}
-            >
-              Độ sáng
-            </BtnControl>
-            <BtnControl
-              className={`btn btn-01 ${currentTab === "DIEU-HOA" ? " btn-active" : ""}`}
-              icon={<AirVentIcon strokeWidth={1.2} color="currentColor" size={18} />}
-              onClick={() => handleOpenControl("DIEU-HOA")}
-            >
-              Điều hòa
-            </BtnControl>
-            <BtnControl
-              className={`btn btn-01 ${currentTab === "REM" ? " btn-active" : ""}`}
-              icon={<CurtainSvg fill="currentColor" style={{ width: 16 }} />}
-              onClick={() => handleOpenControl("REM")}
-            >
-              Rèm cửa
-            </BtnControl>
-          </Flex>
-        </Flex>
+        {extraTitle}
       </StyledTitle>
       <StyleDrawer
         open
@@ -166,29 +137,6 @@ const StyledTitle = styled(Flex)`
   &.right {
     right: 0;
     padding-right: 6px;
-  }
-
-  & .btn {
-    border-radius: 100rem;
-    height: 30px;
-  }
-  & .btn-00 {
-    background-color: rgba(255, 255, 255, 0.2);
-    color: ${({ theme }) => theme.generatedColors[7]};
-    backdrop-filter: blur(2px);
-  }
-  & .btn-01 {
-    padding: 0 8px;
-    color: ${({ theme }) => theme.generatedColors[7]};
-    backdrop-filter: blur(2px);
-    &:hover {
-      border: 1px solid ${({ theme }) => rgba(theme.generatedColors[2], 0.2)};
-    }
-    &.btn-active {
-      color: ${({ theme }) => theme.generatedColors[7]} !important;
-      border: 1px solid ${({ theme }) => rgba(theme.generatedColors[3], 0.2)} !important;
-      background-color: rgba(255, 255, 255, 0.2) !important;
-    }
   }
 `;
 
