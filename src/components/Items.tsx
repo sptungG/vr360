@@ -1,21 +1,28 @@
-import { MeshReflectorMaterial } from "@react-three/drei";
+import styled from "@emotion/styled";
+import Link from "next/link";
 
-export function Floor(props: any) {
-  return (
-    <mesh receiveShadow position={[0, -150, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-      <planeGeometry args={[2000, 2000]} />
-      <MeshReflectorMaterial
-        mirror={0}
-        color="#878790"
-        blur={[400, 400]}
-        resolution={1024}
-        mixBlur={1}
-        mixStrength={3}
-        depthScale={1}
-        minDepthThreshold={0.85}
-        metalness={0}
-        roughness={1}
-      />
-    </mesh>
-  );
-}
+export const StyledMarker01 = styled(Link)`
+  position: relative;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  & img.thumbnail {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 10px;
+    border-radius: 100rem;
+  }
+`;
+
+export const StyledVideo01 = styled.div`
+  border: 2px solid #000;
+  height: fit-content;
+  & video {
+    height: 100%;
+    object-fit: contain;
+  }
+`;

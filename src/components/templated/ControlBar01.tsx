@@ -11,6 +11,8 @@ import PanelScenes from "./tabs/PanelScenes";
 import { CurtainSvg, Light01Svg } from "../icons";
 import ControlPopover, { useControlState } from "./controls/ControlPopover";
 import { BtnControl } from "./controls/BtnControl";
+import { useRouter } from "next/router";
+import { If } from "@uiw/react-only-when";
 
 type TControlBar01Props = DrawerProps & {};
 
@@ -20,12 +22,16 @@ const ControlBar01 = ({ children, ...props }: TControlBar01Props) => {
   const {
     token: { colorBgBase, colorTextLabel, colorPrimary, colorTextTertiary },
   } = theme.useToken();
-  const { generatedColors } = useTheme();
+  const {
+    query: { id },
+    pathname,
+  } = useRouter();
+  const roomName = pathname.split("/")?.[1];
 
   const { autoRotate, isViewing, setAutoRotate } = useSceneState((s) => s);
   const { currentTab, setIsOpen, setCurrentTab } = useControlState((s) => s);
 
-  const [selectedTab, setSelectedTab] = useState<string>("master-bedroom");
+  const [selectedTab, setSelectedTab] = useState<string>(roomName);
 
   const handleOpenControl = (t = "DEN") => {
     setIsOpen(true);
@@ -127,12 +133,12 @@ const ControlBar01 = ({ children, ...props }: TControlBar01Props) => {
           />
         }
       >
-        {selectedTab === "livingroom" && (
+        <If condition={selectedTab === "livingroom"}>
           <PanelScenes items={LIST_SCENE_00} parentName="livingroom" />
-        )}
-        {selectedTab === "master-bedroom" && (
+        </If>
+        <If condition={selectedTab === "master-bedroom"}>
           <PanelScenes items={LIST_SCENE_01} parentName="master-bedroom" />
-        )}
+        </If>
       </StyleDrawer>
     </StyledWrapper>
   );
@@ -204,6 +210,9 @@ const StyledTabsNav01 = styled(Tabs)`
     background: var(--bg-color);
     font-size: 13px;
     color: ${({ theme }) => theme.generatedColors[6]};
+    & .ant-tabs-tab-btn {
+      font-weight: 500;
+    }
     &:not(:first-of-type) {
       margin-left: -1px;
       z-index: 0;
@@ -222,6 +231,9 @@ const StyledTabsNav01 = styled(Tabs)`
     }
   }
   & .ant-tabs-tab.ant-tabs-tab-active {
+    & .ant-tabs-tab-btn {
+      color: ${({ theme }) => theme.generatedColors[6]} !important;
+    }
     --bg-color: ${({ theme }) => rgba(theme.generatedColors[4], 0.2)};
     --border-color: ${({ theme }) => rgba(theme.generatedColors[4], 0.2)};
   }
