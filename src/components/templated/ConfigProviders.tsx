@@ -12,7 +12,7 @@ type TConfigProviderProps = {
 };
 
 const { darkAlgorithm, defaultAlgorithm } = theme; 
-export const colorPrimary = "#e04218";
+export const colorPrimary = "#2A9476";
 const generatedColors = generate(colorPrimary);
 
 export const ConfigProviders = ({ children, mode = "light" }: TConfigProviderProps) => {

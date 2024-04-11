@@ -1,54 +1,16 @@
-import useSceneState from "@/common/useSceneState";
+import useSceneState, { LIST_SCENE_00, LIST_SCENE_01 } from "@/common/useSceneState";
+import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
-import {
-  Badge,
-  Button,
-  ButtonProps,
-  Card,
-  Carousel,
-  Divider,
-  DrawerProps,
-  Flex,
-  Form,
-  Pagination,
-  Tabs,
-  Typography,
-  theme,
-} from "antd";
-import {
-  ArrowRightFromLineIcon,
-  BadgePercent,
-  CircleChevronRightIcon,
-  GalleryHorizontalIcon,
-  HeartIcon,
-  MessageCircleMoreIcon,
-  PanelBottomCloseIcon,
-  PanelBottomOpenIcon,
-  PanelTopOpenIcon,
-  PlusIcon,
-  Rotate3DIcon,
-  ShoppingCartIcon,
-  SquareCheckBigIcon,
-  StoreIcon,
-} from "lucide-react";
+import { Badge, Button, ButtonProps, DrawerProps, Flex, Form, Tabs, theme } from "antd";
+import { rgba } from "emotion-rgba";
+import { AirVentIcon, Rotate3DIcon, Settings2Icon } from "lucide-react";
 import { useId, useState } from "react";
 import DrawerBottom from "../DrawerBottom";
 import Tooltip from "../Tooltip";
-import Avatar from "./Avatar";
-import { useTheme } from "@emotion/react";
-import { SCENES } from "@/common/data";
-import ScrollBar from "./ScrollBar";
-import { formatCurrency, formatNumber } from "@/common/utils";
-import { rgba } from "emotion-rgba";
-import { PlusOutlined } from "@ant-design/icons";
-import { PromotionSvg } from "../icons";
-import Image, { NImage } from "../Image";
-import PanelPromo from "./tabs/PanelPromo";
-import PanelItems from "./tabs/PanelItems";
 import PanelScenes from "./tabs/PanelScenes";
-import PanelBookingTable from "./tabs/PanelBookingTable";
-import PanelOrder from "./tabs/PanelOrder";
-import { usePrevious } from "react-use";
+import { CurtainSvg, Light01Svg } from "../icons";
+import ControlPopover, { useControlState } from "./controls/ControlPopover";
+import { BtnControl } from "./controls/BtnControl";
 
 type TControlBar01Props = DrawerProps & {};
 
@@ -60,161 +22,100 @@ const ControlBar01 = ({ children, ...props }: TControlBar01Props) => {
   } = theme.useToken();
   const { generatedColors } = useTheme();
 
-  const { id, autoRotate, isViewing } = useSceneState((s) => s);
-  const setAutoRotate = useSceneState((s) => s.setAutoRotate);
+  const { autoRotate, isViewing, setAutoRotate } = useSceneState((s) => s);
+  const { currentTab, setIsOpen, setCurrentTab } = useControlState((s) => s);
 
-  const [selectedTab, setSelectedTab] = useState<string>("khu-vuc");
-  const prevSelectedTab = usePrevious(selectedTab);
-  const [selectedTabPromo, setSelectedTabPromo] = useState<string>("1233");
-  const [count01, setCount01] = useState(1);
-  const [count02, setCount02] = useState(1);
+  const [selectedTab, setSelectedTab] = useState<string>("master-bedroom");
+
+  const handleOpenControl = (t = "DEN") => {
+    setIsOpen(true);
+    setCurrentTab(t);
+  };
 
   return (
-    <>
-      <StyledTitle
-        className="left"
-        align="start"
-        vertical
-        gap={0}
-        style={{ userSelect: "none", maxWidth: "calc(100%-48px)" }}
-      >
-        <Flex align="end">
-          <Avatar
-            size={32}
-            style={{
-              margin: "-2px 6px 0 0",
-              borderColor: "none",
-              backgroundColor: "rgba(255,255,255,0.25)",
-            }}
-            src="/images/BK_LOGO_ICON.png"
-            icon={<StoreIcon color={colorBgBase} size={20} />}
-          ></Avatar>
-          <Flex vertical>
-            <Typography.Title
-              level={2}
-              className="title"
-              style={{ margin: 0, color: colorBgBase, lineHeight: 1, fontSize: 15 }}
+    <StyledWrapper id={uid + "WRAPPER"}>
+      <StyledTitle className="left" align="end" gap={20} style={{ bottom: 148 }}>
+        <Flex align="center">
+          <Flex align="center" style={{ margin: "0 4px 0 0" }}>
+            <ControlPopover>
+              <BtnControl className="btn btn-00" icon={<Settings2Icon size={18} />}></BtnControl>
+            </ControlPopover>
+          </Flex>
+          <Flex align="center" gap={2}>
+            <BtnControl
+              className={`btn btn-01 ${currentTab === "DEN" ? " btn-active" : ""}`}
+              icon={<Light01Svg fill="currentColor" style={{ width: 20, margin: "0 0 -2px" }} />}
+              onClick={() => handleOpenControl("DEN")}
             >
-              Burger King
-            </Typography.Title>
-            <Typography.Text type="secondary" style={{ fontSize: 10, color: colorBgBase }}>
-              2 giờ trước
-            </Typography.Text>
+              Độ sáng
+            </BtnControl>
+            <BtnControl
+              className={`btn btn-01 ${currentTab === "DIEU-HOA" ? " btn-active" : ""}`}
+              icon={<AirVentIcon strokeWidth={1.2} color="currentColor" size={18} />}
+              onClick={() => handleOpenControl("DIEU-HOA")}
+            >
+              Điều hòa
+            </BtnControl>
+            <BtnControl
+              className={`btn btn-01 ${currentTab === "REM" ? " btn-active" : ""}`}
+              icon={<CurtainSvg fill="currentColor" style={{ width: 16 }} />}
+              onClick={() => handleOpenControl("REM")}
+            >
+              Rèm cửa
+            </BtnControl>
           </Flex>
         </Flex>
-        <Typography.Paragraph
-          ellipsis={{ rows: 2, expandable: true, symbol: "Xem thêm" }}
-          style={{ margin: 0, fontSize: 13, color: "#f3f4f6" }}
-        >
-          Được thành lập vào năm 1954, BURGER KING® hiện là chuỗi nhà hàng thức ăn nhanh lớn nhất
-          thế giới. Mỗi ngày, có hơn 11 triệu thực khách đến với các nhà hàng BURGER KING® trên khắp
-          thế giới để thưởng thức các món ăn chất lượng cao, hương vị tuyệt hảo và giá cả phải
-          chăng.
-        </Typography.Paragraph>
       </StyledTitle>
-      <StyledTitle className="right" vertical align="end" gap={20} style={{ width: 48 }}>
-        <Flex gap={12} vertical>
-          <ButtonBadge
-            type="text"
-            size="small"
-            style={{ color: colorBgBase }}
-            icon={<HeartIcon size={21} />}
-            count={count01}
-            onClick={() => setCount01((p) => p + 1)}
-          />
-
-          <ButtonBadge
-            type="text"
-            size="small"
-            style={{ color: colorBgBase }}
-            icon={<MessageCircleMoreIcon size={21} />}
-            count={count02}
-            onClick={() => setCount02((p) => p + 1)}
-          />
-        </Flex>
-
-        <Flex align="center" vertical style={{ margin: "auto 0 0 0" }} gap={10}>
-          <Tooltip title="Tự động xoay">
-            <Button
-              type="text"
-              size="small"
-              icon={<Rotate3DIcon size={21} />}
-              style={{ color: autoRotate ? colorPrimary : colorBgBase }}
-              onClick={() => setAutoRotate(!autoRotate)}
-            ></Button>
-          </Tooltip>
-          <Tooltip title="Mở rộng">
-            <Button
-              type="text"
-              size="small"
-              style={{ color: colorBgBase }}
-              icon={<PanelBottomOpenIcon size={22} />}
-              // type={isAutoRotate ? "primary" : "default"}
-              // onClick={() => setIsAutoRotate((prev) => !prev)}
-            ></Button>
-          </Tooltip>
-        </Flex>
-      </StyledTitle>
-      <StyleWrapper
+      <StyleDrawer
         open
         width={720}
         styles={{
           mask: { display: "none" },
-          body: { padding: 0, minHeight: 100 },
+          body: { padding: "1px 1px 0", minHeight: 100 },
           content: {
-            backgroundColor:
-              selectedTab === "khu-vuc" ? "rgba(255, 255, 255, 0.8)" : "rgba(255, 255, 255, 0.8)",
+            backgroundColor: "rgba(255, 255, 255, 0.2)",
+            backdropFilter: "blur(1px)",
           },
         }}
+        getContainer={() => document?.getElementById(uid + "WRAPPER") || document.body}
         title={
           <StyledTabsNav01
+            style={{ padding: "6px 0" }}
             tabBarStyle={{
               marginBottom: -1,
               color: colorTextLabel,
             }}
-            tabBarGutter={12}
+            indicator={{ size: 0 }}
+            tabBarGutter={0}
+            tabBarExtraContent={
+              <Flex align="center" style={{ margin: "auto 0 0 0" }} gap={10}>
+                <Tooltip title="Tự động xoay">
+                  <Button
+                    type="text"
+                    size="small"
+                    icon={<Rotate3DIcon size={21} />}
+                    style={{ color: autoRotate ? colorPrimary : colorBgBase }}
+                    onClick={() => setAutoRotate(!autoRotate)}
+                  ></Button>
+                </Tooltip>
+              </Flex>
+            }
             items={[
               {
-                key: "khu-vuc",
-                label: (
-                  <GalleryHorizontalIcon
-                    strokeWidth={2.5}
-                    size={18}
-                    style={{ margin: "0 0 -4px 0" }}
-                  />
-                ),
-              },
-              {
-                key: "khuyen-mai",
+                key: "livingroom",
                 label: (
                   <>
-                    <BadgePercent
-                      strokeWidth={2.5}
-                      size={18}
-                      color={generatedColors[5]}
-                      fill={generatedColors[0]}
-                      style={{ margin: "0 0 -4px 0" }}
-                    />
-                    <Badge count={3} overflowCount={99} />
-                  </>
-                ),
-              },
-              { key: "thuc-don", label: "Thực đơn" },
-              {
-                key: "dat-do-an",
-                label: (
-                  <>
-                    Đặt đồ ăn
-                    <Badge count={1} overflowCount={99} />
+                    Phòng khách
+                    <Badge count={LIST_SCENE_00.length} overflowCount={99} />
                   </>
                 ),
               },
               {
-                key: "dat-ban",
+                key: "master-bedroom",
                 label: (
                   <>
-                    Đặt bàn
-                    <Badge count={1} overflowCount={99} />
+                    Phòng ngủ Master
+                    <Badge count={LIST_SCENE_01.length} overflowCount={99} />
                   </>
                 ),
               },
@@ -226,32 +127,61 @@ const ControlBar01 = ({ children, ...props }: TControlBar01Props) => {
           />
         }
       >
-        {selectedTab === "khu-vuc" && <PanelScenes />}
-        {/*  */}
-        {selectedTab === "khuyen-mai" && <PanelPromo />}
-        {/*  */}
-        {selectedTab === "thuc-don" && <PanelItems />}
-        {/*  */}
-        {selectedTab === "dat-do-an" && <PanelOrder />}
-        {/*  */}
-        {selectedTab === "dat-ban" && <PanelBookingTable />}
-      </StyleWrapper>
-    </>
+        {selectedTab === "livingroom" && (
+          <PanelScenes items={LIST_SCENE_00} parentName="livingroom" />
+        )}
+        {selectedTab === "master-bedroom" && (
+          <PanelScenes items={LIST_SCENE_01} parentName="master-bedroom" />
+        )}
+      </StyleDrawer>
+    </StyledWrapper>
   );
 };
 
+const StyledWrapper = styled.div`
+  position: relative;
+  height: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  max-width: 720px;
+`;
+
 const StyledTitle = styled(Flex)`
-  position: fixed;
-  bottom: 148px;
+  position: absolute;
+  bottom: 140px;
+  width: 100%;
   &.left {
     left: 0;
-    width: calc(100% - 40px);
-    padding-left: 6px;
-    max-width: 720px;
+    padding: 0 12px;
+    color: #fff;
   }
   &.right {
     right: 0;
     padding-right: 6px;
+  }
+
+  & .btn {
+    border-radius: 100rem;
+    height: 30px;
+  }
+  & .btn-00 {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: ${({ theme }) => theme.generatedColors[7]};
+    backdrop-filter: blur(2px);
+  }
+  & .btn-01 {
+    padding: 0 8px;
+    color: ${({ theme }) => theme.generatedColors[7]};
+    backdrop-filter: blur(2px);
+    &:hover {
+      border: 1px solid ${({ theme }) => rgba(theme.generatedColors[2], 0.2)};
+    }
+    &.btn-active {
+      color: ${({ theme }) => theme.generatedColors[7]} !important;
+      border: 1px solid ${({ theme }) => rgba(theme.generatedColors[3], 0.2)} !important;
+      background-color: rgba(255, 255, 255, 0.2) !important;
+    }
   }
 `;
 
@@ -260,12 +190,26 @@ const StyledTabsNav01 = styled(Tabs)`
     border: none;
   }
   & .ant-tabs-tab {
+    --bg-color: rgba(255, 255, 255, 0);
+    --border-color: rgba(255, 255, 255, 0);
+    position: relative;
+    width: fit-content;
+    flex-shrink: 0;
+    z-index: 0;
+    padding: 0 12px;
+    height: 28px;
+    border-radius: 100rem;
+    border: 1px solid var(--border-color);
+    background: var(--bg-color);
     font-size: 13px;
-    font-weight: 600;
-    color: inherit;
+    color: ${({ theme }) => theme.generatedColors[6]};
+    &:not(:first-of-type) {
+      margin-left: -1px;
+      z-index: 0;
+    }
     & .ant-badge {
       margin: -2px 0 0 4px;
-      color: ${({ theme }) => theme.colorPrimary};
+      color: inherit;
       .ant-badge-count {
         box-shadow: none;
         background-color: transparent;
@@ -277,6 +221,8 @@ const StyledTabsNav01 = styled(Tabs)`
     }
   }
   & .ant-tabs-tab.ant-tabs-tab-active {
+    --bg-color: ${({ theme }) => rgba(theme.generatedColors[4], 0.2)};
+    --border-color: ${({ theme }) => rgba(theme.generatedColors[4], 0.2)};
   }
 `;
 
@@ -313,17 +259,17 @@ const StyleButton01 = styled(Button)`
   }
 `;
 
-const StyleWrapper = styled(DrawerBottom)`
+const StyleDrawer = styled(DrawerBottom)`
   & .ant-drawer-content-wrapper {
-    border-radius: 10px 10px 0 0;
+    border-radius: 16px 16px 0 0;
     overflow: hidden;
+    box-shadow: none;
     @media screen and (max-width: 767.98px) {
       padding: 0 6px;
-      box-shadow: none;
     }
   }
   & .ant-drawer-content {
-    border-radius: 10px 10px 0 0;
+    border-radius: 16px 16px 0 0;
     overflow: visible !important;
     background-color: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(4px);

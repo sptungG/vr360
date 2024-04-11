@@ -21,8 +21,8 @@ export type TScene = {
 export const SCENES: TScene[] = [
   {
     id: 1,
-    src: "/scene-00.jpg",
-    label: "Sảnh chính",
+    src: "/scene-00.png",
+    label: "Không gian chính",
     hotspots: [
       {
         position: [-323.6924966880152, 90.0618357718875, -361.5822282043567],
@@ -67,12 +67,12 @@ export const SCENES: TScene[] = [
     ],
     routes: [
       {
-        position: [-499.48254610572707, -98.44897692177705, 20.16108242002103],
-        scale: [33, 33, 33],
-        rotation: [0.1, 1.6, -0.05],
+        position: [380, -100, -212],
+        scale: [30, 30, 30],
+        rotation: [0.18, -0.52, -0.1],
         componentName: "RouteArrow01",
         componentProps: {
-          label: "Phòng ăn lớn",
+          label: "Không gian phía sau",
           toSceneId: 2,
         },
       },
@@ -80,8 +80,8 @@ export const SCENES: TScene[] = [
   },
   {
     id: 2,
-    src: "/scene-03.jpg",
-    label: "Khu vui chơi trẻ em",
+    src: "/scene-02.png",
+    label: "Không gian phía sau",
     hotspots: [],
     routes: [
       {
@@ -99,8 +99,8 @@ export const SCENES: TScene[] = [
   },
   {
     id: 3,
-    src: "/scene-04.jpg",
-    label: "Khu bếp chính",
+    src: "/scene-03.png",
+    label: "Phòng tắm",
     hotspots: [],
     routes: [
       {
@@ -119,51 +119,3 @@ export const SCENES: TScene[] = [
 ];
 
 export const getSceneById = (id?: number) => (!!id ? SCENES.find((s) => id === s.id) : undefined);
-
-export const LIST_BREADS = [
-  {
-    id: 1,
-    image: "https://www.starbucks.vn/media/ojjfykqo/pate-chaud_tcm89-24785_w1024_n.jpg",
-    name: "Bánh nhân thịt",
-  },
-  {
-    id: 2,
-    image: "https://www.starbucks.vn/media/jpdj0sgh/almond-croissant_tcm89-24786_w1024_n.jpg",
-    name: "Bánh Croissant hạnh nhân",
-  },
-  {
-    id: 3,
-    image: "https://www.starbucks.vn/media/0fjd2a4d/raisin-rolls_tcm89-24787_w1024_n.jpg",
-    name: "Bánh cuốn nho",
-  },
-  {
-    id: 4,
-    image: "https://www.starbucks.vn/media/3oglqeq3/apricot-danish_tcm89-24788_w1024_n.jpg",
-    name: "Bánh Đào Danish",
-  },
-  {
-    id: 5,
-    image: "https://www.starbucks.vn/media/jo1ooayy/pineapple-danish_tcm89-24789_w1024_n.jpg",
-    name: "Bánh Dứa Danish",
-  },
-  {
-    id: 6,
-    image: "https://www.starbucks.vn/media/foidc5v1/butter-croissant_tcm89-24790_w1024_n.jpg",
-    name: "Bánh Croissant Bơ",
-  },
-  {
-    id: 7,
-    image: "https://www.starbucks.vn/media/3ewpr1uj/chocolate-croissant_tcm89-24791_w1024_n.jpg",
-    name: "Bánh Croissant Sô cô la",
-  },
-  {
-    id: 8,
-    image: "https://www.starbucks.vn/media/kdggfxm2/quiche-bacon-onion_tcm89-24792_w1024_n.jpg",
-    name: "Quiche Bacon & Hành Tây",
-  },
-  {
-    id: 9,
-    image: "https://www.starbucks.vn/media/gcejuerl/quiche-mushroom-onion_tcm89-24793_w1024_n.jpg",
-    name: "Quiche Nấm & Hành Tây",
-  },
-];

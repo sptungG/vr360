@@ -1,27 +1,38 @@
 import { SCENES } from "@/common/data";
 import { NImage } from "@/components/Image";
 import styled from "@emotion/styled";
-import { Tabs, Typography } from "antd";
+import { Flex, Tabs, Typography } from "antd";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 
-type TPanelScenesProps = {};
+type TPanelScenesProps = { items: any[]; parentName: string };
 
-const PanelScenes = ({}: TPanelScenesProps) => {
+const PanelScenes = ({ items = [], parentName }: TPanelScenesProps) => {
+  const {
+    query: { id },
+    pathname,
+  } = useRouter();
+  const IDS = id || ["0"];
+
   return (
     <StyledSceneTabs
+      activeKey={IDS[0]}
       tabBarGutter={0}
       tabBarStyle={{ margin: 0 }}
-      items={SCENES.map((item, index) => ({
+      items={items.map((item, index) => ({
         key: String(item.id),
         label: (
-          <>
-            <NImage src={item.src} alt="" fill quality={1}></NImage>
-            <div className="actions-b">
-              <Typography.Text strong className="title" style={{ color: "#fff" }}>
-                {item.label}
-              </Typography.Text>
-            </div>
-          </>
+          <Link href={`/${parentName}/${item.id}`}>
+            <Flex vertical>
+              <NImage src={item.src} alt="" fill quality={1}></NImage>
+              <div className="actions-b">
+                <Typography.Text strong className="title" style={{ color: "#fff" }}>
+                  {item.label}
+                </Typography.Text>
+              </div>
+            </Flex>
+          </Link>
         ),
       }))}
     />
