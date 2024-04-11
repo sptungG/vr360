@@ -4,6 +4,15 @@ const nextConfig = {
   transpilePackages: ["three"],
   swcMinify: process.env.NODE_ENV === "production",
   compress: process.env.NODE_ENV === "production",
+  async redirects() {
+    return [
+      {
+        source: "/",
+        destination: "/master-bedroom/0",
+        permanent: false,
+      },
+    ];
+  },
   webpack: (config) => {
     config.module.rules.push({
       test: /\.svg$/i,
