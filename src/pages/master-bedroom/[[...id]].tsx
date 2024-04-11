@@ -24,6 +24,7 @@ import {
 import { BtnHotpotAirCond } from "@/components/templated/controls/ControlAirCond";
 import Image from "next/image";
 import { TransformControls } from "@react-three/drei";
+import { StyledMarker01, StyledVideo01 } from "@/components/Items";
 
 const ControlBar01 = dynamic(() => import("@/components/templated/ControlBar01"), { ssr: false });
 
@@ -150,31 +151,5 @@ function Page() {
     </PanoLayout>
   );
 }
-
-const StyledMarker01 = styled(Link)`
-  position: relative;
-  background-color: transparent;
-  outline: none;
-  border: none;
-  padding: 0;
-  margin: 0;
-  cursor: pointer;
-  & img.thumbnail {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 10px;
-    border-radius: 100rem;
-  }
-`;
-
-const StyledVideo01 = styled.div`
-  border: 2px solid #000;
-  height: fit-content;
-  & video {
-    height: 100%;
-    object-fit: contain;
-  }
-`;
 
 export default Page;

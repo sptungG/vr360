@@ -13,12 +13,24 @@ export const LIST_SCENE_01 = [
 ];
 
 export const LIST_SCENE_00 = [
-  { id: 0, src: "/LIVING-ROOM/01.png", label: "Không gian chính" },
-  { id: 1, src: "/LIVING-ROOM/02.png", label: "Không gian 02" },
-  { id: 2, src: "/LIVING-ROOM/03.png", label: "Không gian 03" },
-  { id: 3, src: "/LIVING-ROOM/04.png", label: "Không gian 04" },
-  { id: 4, src: "/LIVING-ROOM/05.png", label: "Không gian 05" },
-  { id: 5, src: "/LIVING-ROOM/06.png", label: "Không gian 06" },
+  {
+    id: 0,
+    src: "/LIVING-ROOM/01.png",
+    label: "Không gian chính",
+    hotpots: [
+      { id: 0, src: "/LIVING-ROOM/02.png", label: "Không gian 02" },
+      { id: 1, src: "/LIVING-ROOM/03.png", label: "Không gian 03" },
+    ],
+  },
+  {
+    id: 1,
+    src: "/LIVING-ROOM/04.png",
+    label: "Không gian bếp ăn",
+    hotpots: [
+      { id: 0, src: "/LIVING-ROOM/05.png", label: "Không gian nấu ăn" },
+    ],
+  },
+  { id: 2, src: "/LIVING-ROOM/06.png", label: "WC" },
 ];
 
 type TSceneState = {

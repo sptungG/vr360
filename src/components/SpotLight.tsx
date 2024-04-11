@@ -17,6 +17,7 @@ type TSpotLightProps = Pick<JSX.IntrinsicElements["mesh"], "position" | "scale" 
   showHelper?: boolean;
   children?: React.ReactNode;
   hidden?: boolean;
+  opacity?: number;
 };
 
 const SpotLight = ({
@@ -27,6 +28,7 @@ const SpotLight = ({
   showHelper = false,
   children,
   hidden,
+  opacity = 1
 }: TSpotLightProps) => {
   const uid = useId();
   const depthBuffer = useDepthBuffer({ frames: 1 });
@@ -71,7 +73,7 @@ const SpotLight = ({
           intensity={1}
           color={color}
           target={target}
-          opacity={hidden ? 0 : 1}
+          opacity={hidden ? 0 : opacity}
         />
         <primitive object={target} position={[0, -10, 0]} />
       </mesh>
