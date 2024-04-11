@@ -1,4 +1,5 @@
 import "antd/dist/reset.css";
+import "react-tuby/css/main.css";
 import "@/styles/globals.css";
 import "@/styles/loading.css";
 

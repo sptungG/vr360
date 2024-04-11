@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: false,
+  reactStrictMode: true,
   transpilePackages: ["three"],
   swcMinify: process.env.NODE_ENV === "production",
   compress: process.env.NODE_ENV === "production",

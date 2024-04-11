@@ -17,10 +17,12 @@ const DrawerBottom = ({
       rootStyle={{}}
       maskClosable={false}
       rootClassName={className}
+      push={false}
       styles={{
         wrapper: {
           width,
           height: "fit-content",
+          minHeight: 142,
           margin: "0 auto",
           ...wrapper,
         },
