@@ -1,28 +1,29 @@
 import React from "react";
-import { Slider as AntdSlider, SliderSingleProps } from "antd";
+import { Slider as AntdSlider, SliderProps } from "antd-mobile";
 import styled from "@emotion/styled";
 
-type TSliderProps = SliderSingleProps & {};
+type TSliderProps = SliderProps & {};
 
 const Slider = (props: TSliderProps) => {
   return <AntdSlider {...props} />;
 };
 
-export const TemperatureSlider = ({ value, max, min, tooltip, ...props }: TSliderProps) => {
+export const TemperatureSlider = ({ value, max, min, ...props }: TSliderProps) => {
   return (
     <StyledSlider01
-      styles={{
-        rail: {
-          background: "linear-gradient(to right,#91caff 40%,#ffc53d, #ff7a45)",
-        },
-        tracks: {
-          background: "transparent",
-        },
-        track: {
-          background: "transparent",
-        },
-        handle: { zIndex: 10 },
-      }}
+      // styles={{
+      //   rail: {
+      //     background: "linear-gradient(to right,#91caff 40%,#ffc53d, #ff7a45)",
+      //   },
+      //   tracks: {
+      //     background: "transparent",
+      //   },
+      //   track: {
+      //     background: "transparent",
+      //   },
+      //   handle: { zIndex: 10 },
+      // }}
+      style={{ "--fill-color": "" }}
       value={value}
       min={min}
       max={max}
@@ -30,10 +31,6 @@ export const TemperatureSlider = ({ value, max, min, tooltip, ...props }: TSlide
         ...(min ? { [String(min)]: `${min}°C` } : {}),
         ...(value ? { [String(value)]: `${value}°C` } : {}),
         ...(max ? { [String(max)]: `${max}°C` } : {}),
-      }}
-      tooltip={{
-        formatter: (v) => `${v}°C`,
-        ...tooltip,
       }}
       {...props}
     />
@@ -60,24 +57,17 @@ const StyledSlider01 = styled(AntdSlider)`
   }
 `;
 
-export const FanSlider = ({ value, max, min, tooltip, ...props }: TSliderProps) => {
+export const FanSlider = ({ value, max, min, ...props }: TSliderProps) => {
   const mappedMark = Array(max || 0)
     .fill(null)
     .map((_, i) => i + 1)
     .reduce((prev, curr) => ({ ...prev, [String(curr)]: `${curr}` }), {});
   return (
     <StyledSlider02
-      styles={{
-        handle: { zIndex: 10 },
-      }}
       value={value}
       min={min}
       max={max}
       marks={mappedMark}
-      tooltip={{
-        formatter: (v) => `${v}`,
-        ...tooltip,
-      }}
       {...props}
     />
   );

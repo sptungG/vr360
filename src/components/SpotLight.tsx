@@ -1,16 +1,8 @@
 import Html from "@/common/Html";
 import { THREE } from "@/common/three";
-import {
-  SpotLight as R3SpotLight,
-  TransformControls,
-  useDepthBuffer,
-  useHelper,
-} from "@react-three/drei";
-import { Bloom, EffectComposer } from "@react-three/postprocessing";
+import { SpotLight as R3SpotLight, useDepthBuffer, useHelper } from "@react-three/drei";
 import { useId, useRef, useState } from "react";
 import { SpotLightHelper } from "three";
-import Tooltip from "./Tooltip";
-import BtnHotspot from "./templated/BtnHotspot";
 
 type TSpotLightProps = Pick<JSX.IntrinsicElements["mesh"], "position" | "scale" | "rotation"> & {
   color?: string | number;
@@ -28,7 +20,7 @@ const SpotLight = ({
   showHelper = false,
   children,
   hidden,
-  opacity = 1
+  opacity = 1,
 }: TSpotLightProps) => {
   const uid = useId();
   const depthBuffer = useDepthBuffer({ frames: 1 });

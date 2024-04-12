@@ -1,30 +1,22 @@
-import styled from "@emotion/styled";
-
 import Html from "@/common/Html";
 import useSceneState, { LIST_SCENE_01 } from "@/common/useSceneState";
+import { StyledVideo01 } from "@/components/Items";
 import PanoLayout from "@/components/PanoLayout";
 import SpotLight from "@/components/SpotLight";
 import Tooltip from "@/components/Tooltip";
-import { CurtainSvg, Light01Svg, MarkerSvg } from "@/components/icons";
-import Avatar from "@/components/templated/Avatar";
-import { RouteArrow01 } from "@/components/templated/RouteArrow";
-import { If } from "@uiw/react-only-when";
-import { Flex } from "antd";
-import { AirVentIcon } from "lucide-react";
-import dynamic from "next/dynamic";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useId } from "react";
+import { CurtainSvg } from "@/components/icons";
+import { RouteArrow01, RouteMarker01 } from "@/components/templated/RouteArrow";
 import { BtnHotspot } from "@/components/templated/controls/BtnControl";
-import { ControlActions, useControlState } from "@/components/templated/controls/ControlPopover";
+import { BtnHotpotAirCond } from "@/components/templated/controls/ControlAirCond";
 import {
   BtnHotpotLightTop,
   useControlStateLight,
 } from "@/components/templated/controls/ControlLight";
-import { BtnHotpotAirCond } from "@/components/templated/controls/ControlAirCond";
-import Image from "next/image";
-import { TransformControls } from "@react-three/drei";
-import { StyledMarker01, StyledVideo01 } from "@/components/Items";
+import { ControlActions, useControlState } from "@/components/templated/controls/ControlPopover";
+import { If } from "@uiw/react-only-when";
+import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
+import { useId } from "react";
 
 const ControlBar01 = dynamic(() => import("@/components/templated/ControlBar01"), { ssr: false });
 
@@ -88,29 +80,19 @@ function Page() {
 
         <mesh position={[300, -140, -360]} scale={[44, 44, 44]} rotation={[0, 2.2, 0]}>
           <Html center transform>
-            <StyledMarker01 href={"/master-bedroom/0/0"}>
-              <Flex vertical>
-                <Image
-                  className="thumbnail"
-                  src={LIST_SCENE_01[0].hotpots![0].src}
-                  alt=""
-                  width={100}
-                  height={100}
-                  quality={10}
-                ></Image>
-                <MarkerSvg style={{ width: 125 }} />
-              </Flex>
-            </StyledMarker01>
+            <RouteMarker01
+              href={"/master-bedroom/0/0"}
+              imageUrl={LIST_SCENE_01[0].hotpots![0].src}
+            />
           </Html>
         </mesh>
 
         <mesh position={[85, 150, -500]} scale={[50, 50, 50]} rotation={[0, 0, -0.1]}>
           <Html center transform>
-            <Tooltip title={"Rèm cửa"} onOpenChange={onTooltipOpen}>
-              <BtnHotspot
-                onClick={() => handleOpenControl("REM")}
-                icon={<CurtainSvg fill="currentColor" style={{ width: 16 }} />}
-              />
+            <Tooltip content={"Rèm cửa"} onVisibleChange={onTooltipOpen}>
+              <BtnHotspot onClick={() => handleOpenControl("REM")}>
+                <CurtainSvg fill="currentColor" style={{ width: 16 }} />
+              </BtnHotspot>
             </Tooltip>
           </Html>
         </mesh>

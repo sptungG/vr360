@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  transpilePackages: ["three"],
+  transpilePackages: ["three", "antd-mobile"],
   swcMinify: process.env.NODE_ENV === "production",
   compress: process.env.NODE_ENV === "production",
   async redirects() {

@@ -1,13 +1,13 @@
-import styled from "@emotion/styled";
-import { Badge, Flex, Form, Popover, Radio, Switch, TimePicker } from "antd";
-import { AirVentIcon, DropletIcon, FanIcon, SnowflakeIcon, SunIcon } from "lucide-react";
-import React, { useState } from "react";
-import { create } from "zustand";
-import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
-import { SwitchIcons, SwitchOnOff } from "../field/Switch";
-import { FanSlider, TemperatureSlider } from "../field/Slider";
-import { BtnHotspot } from "./BtnControl";
+import Flex from "@/components/Flex";
 import Tooltip from "@/components/Tooltip";
+import styled from "@emotion/styled";
+import { Form, Selector } from "antd-mobile";
+import { AirVentIcon, DropletIcon, FanIcon, SnowflakeIcon, SunIcon } from "lucide-react";
+import { create } from "zustand";
+import { FanSlider, TemperatureSlider } from "../field/Slider";
+import { SwitchOnOff } from "../field/Switch";
+import TimePicker from "../field/TimePicker";
+import { BtnHotspot } from "./BtnControl";
 
 type TState = {
   config: any;
@@ -28,64 +28,33 @@ export const ControlAirCond = ({}: TControlAirCondProps) => {
     <Flex align="start">
       <Form
         form={form}
-        labelCol={{ flex: "auto" }}
-        labelAlign="left"
-        labelWrap
-        wrapperCol={{ flex: "none" }}
         initialValues={config}
         onValuesChange={(_, formData) => {
           setConfig(formData);
         }}
       >
-        <Form.Item name="mode" label="Chế độ" labelCol={{ flex: "auto" }}>
-          <StyledRadioGroup>
-            {[
+        <Form.Item name="mode" label="Chế độ">
+          <StyledRadioGroup
+            options={[
               { value: 1, label: "Auto" },
               { value: 2, label: <SnowflakeIcon size={16} /> },
               { value: 3, label: <DropletIcon size={16} /> },
               { value: 4, label: <FanIcon size={16} /> },
               { value: 5, label: <SunIcon size={17} style={{ marginBottom: -3 }} /> },
-            ].map((item, index) => (
-              <Radio.Button
-                value={item.value}
-                key={item.value + index}
-                style={index == 0 ? { padding: "0 8px" } : {}}
-              >
-                {item.label}
-              </Radio.Button>
-            ))}
-          </StyledRadioGroup>
+            ]}
+          />
         </Form.Item>
 
-        <Form.Item
-          name="temperature"
-          label="Nhiệt độ"
-          labelCol={{ flex: "none" }}
-          wrapperCol={{ flex: "auto" }}
-          style={{ marginBottom: 8 }}
-        >
-          <TemperatureSlider max={30} min={16} tooltip={{ open: false }} />
+        <Form.Item name="temperature" label="Nhiệt độ" style={{ marginBottom: 8 }}>
+          <TemperatureSlider max={30} min={16} />
         </Form.Item>
 
-        <Form.Item
-          name="fanSpeed"
-          label="Quạt gió"
-          labelCol={{ flex: "none" }}
-          wrapperCol={{ flex: "auto" }}
-          style={{ marginBottom: 8 }}
-        >
-          <FanSlider max={6} min={1} tooltip={{ open: false }} />
+        <Form.Item name="fanSpeed" label="Quạt gió" style={{ marginBottom: 8 }}>
+          <FanSlider max={6} min={1} />
         </Form.Item>
 
         <Form.Item name="offTime" label="Hẹn giờ tắt">
-          <TimePicker
-            variant="filled"
-            placeholder="HH:mm"
-            format={"HH:mm"}
-            minuteStep={5}
-            showNow={false}
-            inputReadOnly
-          />
+          <TimePicker />
         </Form.Item>
 
         <Form.Item name="open" label="Bật/Tắt" style={{ marginBottom: 0 }}>
@@ -96,7 +65,7 @@ export const ControlAirCond = ({}: TControlAirCondProps) => {
   );
 };
 
-const StyledRadioGroup = styled(Radio.Group)`
+const StyledRadioGroup = styled(Selector)`
   & .ant-radio-button-wrapper {
     span:nth-of-type(2) svg {
       margin-bottom: -2.5px;
@@ -107,7 +76,7 @@ const StyledRadioGroup = styled(Radio.Group)`
 export const BtnHotpotAirCond = ({ onClick, onTooltipOpen }: any) => {
   const { config } = useControlState((s) => s);
   return (
-    <Tooltip title={"Điều hòa không khí"} onOpenChange={onTooltipOpen}>
+    <Tooltip content={"Điều hòa không khí"} onVisibleChange={onTooltipOpen}>
       <StyledWrapper key={String(config)}>
         <BtnHotspot
           onClick={onClick}
@@ -118,7 +87,7 @@ export const BtnHotpotAirCond = ({ onClick, onTooltipOpen }: any) => {
             <span>OFF</span>
           ) : (
             <Flex align="center" className="temperature-badge">
-              <Badge count={config?.temperature} />
+              <span>{config?.temperature}</span>
               <span>°C</span>
             </Flex>
           )}

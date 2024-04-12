@@ -1,32 +1,29 @@
 import useSceneState, { LIST_SCENE_00, LIST_SCENE_01 } from "@/common/useSceneState";
 import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
-import { Badge, Button, ButtonProps, DrawerProps, Flex, Form, Tabs, theme } from "antd";
-import { rgba } from "emotion-rgba";
-import { AirVentIcon, Rotate3DIcon, Settings2Icon } from "lucide-react";
-import { useId, useState } from "react";
-import DrawerBottom from "../DrawerBottom";
-import Tooltip from "../Tooltip";
-import PanelScenes from "./tabs/PanelScenes";
-import { CurtainSvg, Light01Svg } from "../icons";
-import ControlPopover, { useControlState } from "./controls/ControlPopover";
-import { BtnControl } from "./controls/BtnControl";
-import { useRouter } from "next/router";
 import { If } from "@uiw/react-only-when";
+import { Button, CapsuleTabs, Form, PopupProps } from "antd-mobile";
+import { rgba } from "emotion-rgba";
+import { Rotate3DIcon } from "lucide-react";
+import { useRouter } from "next/router";
+import { useId, useState } from "react";
+import Flex from "../Flex";
+import PopupBottom from "../PopupBottom";
+import Tooltip from "../Tooltip";
+import { useControlState } from "./controls/ControlPopover";
+import PanelScenes from "./tabs/PanelScenes";
 
-type TControlBar01Props = DrawerProps & { extraTitle?: React.ReactNode };
+type TControlBar01Props = PopupProps & { extraTitle?: React.ReactNode };
 
 const ControlBar01 = ({ children, extraTitle, ...props }: TControlBar01Props) => {
   const uid = useId();
   const [form] = Form.useForm();
   const {
-    token: { colorBgBase, colorTextLabel, colorPrimary, colorTextTertiary },
-  } = theme.useToken();
-  const {
     query: { id },
     pathname,
   } = useRouter();
   const roomName = pathname.split("/")?.[1];
+  const { colorPrimary, generatedColors } = useTheme();
 
   const { autoRotate, isViewing, setAutoRotate } = useSceneState((s) => s);
   const { currentTab, setIsOpen, setCurrentTab } = useControlState((s) => s);
@@ -40,50 +37,28 @@ const ControlBar01 = ({ children, extraTitle, ...props }: TControlBar01Props) =>
 
   return (
     <StyledWrapper id={uid + "WRAPPER"}>
-      <StyledTitle className="left" align="end" gap={20} style={{ bottom: 148 }}>
+      <StyledTitle className="left" align="end" gap={20} style={{ bottom: 152 }}>
         {extraTitle}
       </StyledTitle>
-      <StyleDrawer
-        open
+      <StyledPopup
+        visible
         width={720}
-        styles={{
-          mask: { display: "none" },
-          body: { padding: "1px 1px 0", minHeight: 100 },
-          content: {
-            backgroundColor: "rgba(255, 255, 255, 0.2)",
-            backdropFilter: "blur(1px)",
-          },
-        }}
         getContainer={() => document?.getElementById(uid + "WRAPPER") || document.body}
-        title={
+      >
+        <Flex align="center" justify="space-between" className="header-wrapper">
           <StyledTabsNav01
-            style={{ padding: "6px 0" }}
-            tabBarStyle={{
-              marginBottom: -1,
-              color: colorTextLabel,
+            activeKey={String(selectedTab)}
+            onChange={(key) => {
+              setSelectedTab(key);
             }}
-            indicator={{ size: 0 }}
-            tabBarGutter={0}
-            tabBarExtraContent={
-              <Flex align="center" style={{ margin: "auto 0 0 0" }} gap={10}>
-                <Tooltip title="Tự động xoay">
-                  <Button
-                    type="text"
-                    size="small"
-                    icon={<Rotate3DIcon size={21} />}
-                    style={{ color: autoRotate ? colorPrimary : colorBgBase }}
-                    onClick={() => setAutoRotate(!autoRotate)}
-                  ></Button>
-                </Tooltip>
-              </Flex>
-            }
-            items={[
+          >
+            {[
               {
                 key: "livingroom",
                 label: (
                   <>
-                    Phòng khách
-                    <Badge count={LIST_SCENE_00.length} overflowCount={99} />
+                    <span>Phòng khách</span>
+                    <span>{LIST_SCENE_00.length}</span>
                   </>
                 ),
               },
@@ -91,26 +66,38 @@ const ControlBar01 = ({ children, extraTitle, ...props }: TControlBar01Props) =>
                 key: "master-bedroom",
                 label: (
                   <>
-                    Phòng ngủ Master
-                    <Badge count={LIST_SCENE_01.length} overflowCount={99} />
+                    <span>Phòng ngủ Master</span>
+                    <span>{LIST_SCENE_01.length}</span>
                   </>
                 ),
               },
-            ]}
-            activeKey={String(selectedTab)}
-            onTabClick={(key) => {
-              setSelectedTab(key);
-            }}
-          />
-        }
-      >
+            ].map((item, index) => (
+              <CapsuleTabs.Tab key={item.key} title={item.label} />
+            ))}
+          </StyledTabsNav01>
+
+          <Flex align="center" style={{ margin: "0 0 0" }}>
+            <Tooltip content="Tự động xoay">
+              <Button
+                color="primary"
+                fill="none"
+                size="small"
+                style={{ color: autoRotate ? colorPrimary : generatedColors[2] }}
+                onClick={() => setAutoRotate(!autoRotate)}
+                className="btn-autoRotate"
+              >
+                <Rotate3DIcon size={21} />
+              </Button>
+            </Tooltip>
+          </Flex>
+        </Flex>
         <If condition={selectedTab === "livingroom"}>
           <PanelScenes items={LIST_SCENE_00} parentName="livingroom" />
         </If>
         <If condition={selectedTab === "master-bedroom"}>
           <PanelScenes items={LIST_SCENE_01} parentName="master-bedroom" />
         </If>
-      </StyleDrawer>
+      </StyledPopup>
     </StyledWrapper>
   );
 };
@@ -131,8 +118,11 @@ const StyledTitle = styled(Flex)`
   width: 100%;
   &.left {
     left: 0;
-    padding: 0 12px;
+    padding: 0 4px;
     color: #fff;
+    @media screen and (min-width: 768px) {
+      padding: 0 8px;
+    }
   }
   &.right {
     right: 0;
@@ -140,12 +130,18 @@ const StyledTitle = styled(Flex)`
   }
 `;
 
-const StyledTabsNav01 = styled(Tabs)`
-  & .ant-tabs-nav::before {
-    border: none;
+const StyledTabsNav01 = styled(CapsuleTabs)`
+  padding: 0;
+  & > .adm-capsule-tabs-header {
+    border-bottom: none;
+    padding: 6px;
   }
-  & .ant-tabs-tab {
-    --bg-color: rgba(255, 255, 255, 0);
+  & .adm-capsule-tabs-tab-wrapper {
+    padding: 0;
+    margin-right: 6px;
+  }
+  & .adm-capsule-tabs-tab {
+    --bg-color: rgba(255, 255, 255, 0.1);
     --border-color: rgba(255, 255, 255, 0);
     position: relative;
     width: fit-content;
@@ -158,93 +154,47 @@ const StyledTabsNav01 = styled(Tabs)`
     background: var(--bg-color);
     font-size: 13px;
     color: ${({ theme }) => theme.generatedColors[6]};
-    & .ant-tabs-tab-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+
+    & span:nth-of-type(1) {
       font-weight: 500;
     }
-    &:not(:first-of-type) {
-      margin-left: -1px;
-      z-index: 0;
-    }
-    & .ant-badge {
-      margin: -2px 0 0 4px;
-      color: inherit;
-      .ant-badge-count {
-        box-shadow: none;
-        background-color: transparent;
-        padding: 0;
-        min-width: 10px;
-        font-size: 12px;
-        color: inherit;
-      }
+    & span:nth-of-type(2) {
+      font-weight: 600;
     }
   }
-  & .ant-tabs-tab.ant-tabs-tab-active {
-    & .ant-tabs-tab-btn {
-      color: ${({ theme }) => theme.generatedColors[6]} !important;
-    }
+  & .adm-capsule-tabs-tab.adm-capsule-tabs-tab-active {
     --bg-color: ${({ theme }) => rgba(theme.generatedColors[4], 0.2)};
     --border-color: ${({ theme }) => rgba(theme.generatedColors[4], 0.2)};
   }
 `;
 
-type TButtonBadgeProps = ButtonProps & { count?: number };
-const ButtonBadge = ({ count = 0, children, icon, ...props }: TButtonBadgeProps) => {
-  return (
-    <StyleButton01 {...props}>
-      {icon}
-      <Badge
-        size="small"
-        overflowCount={999}
-        count={count}
-        styles={{ root: { paddingRight: count > 99 ? 0 : 4 } }}
-      />
-    </StyleButton01>
-  );
-};
-const StyleButton01 = styled(Button)`
-  height: fit-content;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 2px;
-  padding: 0;
-  & .ant-btn-icon {
-    margin-inline-end: 2px !important;
-  }
-  & .ant-badge .ant-badge-count {
-    box-shadow: none;
-    background-color: transparent;
-    padding: 0;
-    border-radius: 0;
-  }
-`;
+const StyledPopup = styled(PopupBottom)`
+  & .adm-popup-body {
+    border-radius: 0 0;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(2px);
+    left: 50%;
+    transform: translateX(-50%) !important;
 
-const StyleDrawer = styled(DrawerBottom)`
-  & .ant-drawer-content-wrapper {
-    border-radius: 16px 16px 0 0;
-    overflow: hidden;
-    box-shadow: none;
-    @media screen and (max-width: 767.98px) {
-      padding: 0 6px;
+    & .header-wrapper {
+      border-bottom: solid 1px rgba(0, 0, 0, 0.05);
+      & .btn-autoRotate {
+        padding: 0 8px;
+        & > span {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
     }
-  }
-  & .ant-drawer-content {
-    border-radius: 16px 16px 0 0;
-    overflow: visible !important;
-    background-color: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(4px);
-  }
-  & .ant-drawer-header {
-    padding: 0 6px;
-    position: relative;
-    & .ant-drawer-close {
-      display: none;
+
+    @media screen and (min-width: 768px) {
+      border-radius: 16px 16px 0 0;
     }
-  }
-  & .ant-drawer-footer {
-    padding: 0 6px 2px;
-    position: relative;
   }
 `;
 

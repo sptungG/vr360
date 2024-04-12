@@ -1,6 +1,6 @@
 import { NOT_FOUND_IMG } from "@/common/constant";
 import styled from "@emotion/styled";
-import { Image as AntdImage, ImageProps, Skeleton } from "antd";
+import { Image as AntdImage, ImageProps, Skeleton } from "antd-mobile";
 import { default as NextjsImage, ImageProps as NextjsImageProps } from "next/image";
 import queryString from "query-string";
 
@@ -11,7 +11,6 @@ export function NImage(props: NextjsImageProps) {
 }
 
 const Image = ({
-  preview = false,
   fallback = NOT_FOUND_IMG,
   src,
   /**
@@ -22,11 +21,10 @@ const Image = ({
 }: ImageProps) => {
   return (
     <AntdImage
-      preview={preview}
       src={src}
       placeholder={
-        <Skeleton.Image
-          active
+        <Skeleton
+          animated
           style={{ width: props.width || "100%", height: props.height || "100%" }}
         />
       }

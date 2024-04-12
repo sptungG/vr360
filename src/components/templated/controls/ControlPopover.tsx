@@ -1,29 +1,30 @@
 import styled from "@emotion/styled";
 import { Case, Switch } from "@uiw/react-only-when/switch";
-import { Button, Flex, Popover, PopoverProps, Tabs, Typography } from "antd";
+import { Button, CapsuleTabs, Popover, PopoverProps, Tabs } from "antd-mobile";
 import React from "react";
 import { create } from "zustand";
 import ControlLight from "./ControlLight";
 import ControlAirCond from "./ControlAirCond";
 import ControlCurtain from "./ControlCurtain";
 import { If } from "@uiw/react-only-when";
-import { CloseOutlined } from "@ant-design/icons";
+import { CloseOutline } from "antd-mobile-icons";
 import useSceneState01 from "@/common/useSceneState";
 import { BtnControl } from "./BtnControl";
 import { AirVentIcon, Settings2Icon } from "lucide-react";
 import { CurtainSvg, Light01Svg } from "@/components/icons";
 import { rgba } from "emotion-rgba";
+import Flex from "@/components/Flex";
 
 type TState = {
   open?: boolean;
-  currentTab: string;
-  setCurrentTab: (s: string) => void;
+  currentTab?: string;
+  setCurrentTab: (s?: string) => void;
   setIsOpen: (s: boolean) => void;
 };
 
 export const useControlState = create<TState>()((set) => ({
   open: false,
-  currentTab: "DEN",
+  currentTab: undefined,
   setCurrentTab: (s) => set({ currentTab: s }),
   setIsOpen: (s) => set({ open: !!s }),
 }));
@@ -34,33 +35,23 @@ const ControlPopover = ({ children }: TControlPopoverProps) => {
   const { open, setIsOpen, currentTab, setCurrentTab } = useControlState((s) => s);
   return (
     <Popover
-      open={open}
-      afterOpenChange={(o) => {
-        if (!!o) {
-          setAutoRotate(false);
-        }
-      }}
-      destroyTooltipOnHide
+      visible={open}
       placement="topLeft"
-      trigger={["click"]}
-      arrow={{ pointAtCenter: true }}
-      overlayInnerStyle={{ padding: "8px 8px 8px" }}
-      mouseEnterDelay={0.01}
-      mouseLeaveDelay={0.01}
       content={
         <StyledWrapper vertical>
-          <Flex className="" justify="space-between" style={{ margin: "0 0 8px" }}>
-            <Typography.Title level={3} style={{ margin: 0, fontSize: 16 }}>
-              Bộ điều khiển
-            </Typography.Title>
+          <Flex className="" justify="space-between" style={{ margin: "0 0 0" }}>
+            <h3 style={{ margin: 0, fontSize: 16 }}>Bộ điều khiển</h3>
             <Button
-              type="text"
+              fill="none"
               size="small"
-              icon={<CloseOutlined />}
+              style={{ padding: 0 }}
               onClick={() => {
                 setIsOpen(false);
+                setCurrentTab(undefined);
               }}
-            />
+            >
+              <CloseOutline />
+            </Button>
           </Flex>
           <If condition={currentTab === "DEN"}>
             <ControlLight />
@@ -90,32 +81,52 @@ export const ControlActions = () => {
     <StyledActions align="center">
       <Flex align="center" style={{ margin: "0 4px 0 0" }}>
         <ControlPopover>
-          <BtnControl className="btn btn-00" icon={<Settings2Icon size={18} />}></BtnControl>
+          <Button fill="none" shape="rounded" type="button" className="btn btn-00">
+            <Settings2Icon size={16} />
+          </Button>
         </ControlPopover>
       </Flex>
-      <Flex align="center" gap={2}>
-        <BtnControl
-          className={`btn btn-01 ${currentTab === "DEN" ? " btn-active" : ""}`}
-          icon={<Light01Svg fill="currentColor" style={{ width: 20, margin: "0 0 -2px" }} />}
-          onClick={() => handleOpenControl("DEN")}
-        >
-          Độ sáng
-        </BtnControl>
-        <BtnControl
-          className={`btn btn-01 ${currentTab === "DIEU-HOA" ? " btn-active" : ""}`}
-          icon={<AirVentIcon strokeWidth={1.2} color="currentColor" size={18} />}
-          onClick={() => handleOpenControl("DIEU-HOA")}
-        >
-          Điều hòa
-        </BtnControl>
-        <BtnControl
-          className={`btn btn-01 ${currentTab === "REM" ? " btn-active" : ""}`}
-          icon={<CurtainSvg fill="currentColor" style={{ width: 16 }} />}
-          onClick={() => handleOpenControl("REM")}
-        >
-          Rèm cửa
-        </BtnControl>
-      </Flex>
+      <CapsuleTabs
+        activeKey={currentTab || null}
+        onChange={(k) => {
+          handleOpenControl(k);
+        }}
+        defaultActiveKey={null}
+      >
+        {[
+          {
+            value: "DEN",
+            icon: (
+              <Light01Svg
+                fill="currentColor"
+                style={{ width: 20, height: 20, margin: "0 0 -2px" }}
+              />
+            ),
+            label: "Độ sáng",
+          },
+          {
+            value: "DIEU-HOA",
+            icon: <AirVentIcon strokeWidth={1.2} color="currentColor" size={18} />,
+            label: "Điều hòa",
+          },
+          {
+            value: "REM",
+            icon: <CurtainSvg fill="currentColor" style={{ width: 16, height: 16 }} />,
+            label: "Rèm cửa",
+          },
+        ].map((item, index) => (
+          <CapsuleTabs.Tab
+            key={item.value}
+            destroyOnClose
+            title={
+              <Flex gap={8} align="center">
+                {item.icon}
+                <span>{item.label}</span>
+              </Flex>
+            }
+          />
+        ))}
+      </CapsuleTabs>
     </StyledActions>
   );
 };
@@ -123,22 +134,47 @@ const StyledActions = styled(Flex)`
   & .btn {
     border-radius: 100rem;
     height: 30px;
+    border: 1px solid transparent;
   }
   & .btn-00 {
     background-color: rgba(255, 255, 255, 0.2);
     color: ${({ theme }) => theme.generatedColors[7]};
     backdrop-filter: blur(2px);
+    width: 30px;
+    padding: 0;
+    & > span {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
-  & .btn-01 {
-    padding: 0 8px;
+
+  & .adm-capsule-tabs-header {
+    padding: 6px 6px 6px 0;
+    border-bottom: none;
+  }
+  & .adm-capsule-tabs-tab-wrapper {
+    padding: 0;
+    margin-right: 6px;
+  }
+  & .adm-capsule-tabs-tab {
+    --adm-color-fill-content: transparent;
+    --adm-font-size-7: 13px;
     color: ${({ theme }) => theme.generatedColors[7]};
     backdrop-filter: blur(2px);
+    border: 1px solid transparent;
+    border-radius: 100rem;
+    padding: 0px 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
     &:hover {
-      border: 1px solid ${({ theme }) => rgba(theme.generatedColors[2], 0.2)};
+      border-color: ${({ theme }) => rgba(theme.generatedColors[2], 0.2)};
     }
-    &.btn-active {
+    &.adm-capsule-tabs-tab-active {
       color: ${({ theme }) => theme.generatedColors[7]} !important;
-      border: 1px solid ${({ theme }) => rgba(theme.generatedColors[3], 0.2)} !important;
+      border-color: ${({ theme }) => rgba(theme.generatedColors[3], 0.2)} !important;
       background-color: rgba(255, 255, 255, 0.2) !important;
     }
   }

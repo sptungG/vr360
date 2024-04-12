@@ -1,4 +1,4 @@
-import { Popover as AntdPopover, PopoverProps } from "antd";
+import { Popover as AntdPopover, PopoverProps } from "antd-mobile";
 import { useId } from "react";
 
 type TPopoverProps = PopoverProps & {
@@ -11,8 +11,7 @@ const Popover = ({ children, isPopupContainer, ...props }: TPopoverProps) => {
     <div id={uid}>
       <AntdPopover
         key={uid + "AntdPopover"}
-        arrow={{ pointAtCenter: true }}
-        getPopupContainer={isPopupContainer ? (n) => document.getElementById(uid)! : undefined}
+        getContainer={isPopupContainer ? () => document.getElementById(uid)! : undefined}
         {...props}
       >
         {children}

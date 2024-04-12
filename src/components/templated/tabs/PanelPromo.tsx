@@ -1,4 +1,4 @@
-import DrawerBottom from "@/components/DrawerBottom";
+import DrawerBottom from "@/components/PopupBottom";
 import Image from "@/components/Image";
 import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";

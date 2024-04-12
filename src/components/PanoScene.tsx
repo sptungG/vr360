@@ -1,6 +1,5 @@
-import { TScene } from "@/common/data";
 import { THREE } from "@/common/three";
-import { useCubeCamera, useTexture } from "@react-three/drei";
+import { useTexture } from "@react-three/drei";
 import { useId } from "react";
 
 type TPanoSceneProps = {

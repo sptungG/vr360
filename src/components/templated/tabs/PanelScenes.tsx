@@ -1,12 +1,11 @@
-import { SCENES } from "@/common/data";
+import Flex from "@/components/Flex";
 import { NImage } from "@/components/Image";
+import { StatusProcessing } from "@/components/Items";
 import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
-import { Badge, Flex, Tabs, Typography } from "antd";
-import { EyeIcon } from "lucide-react";
+import { Tabs } from "antd-mobile";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
 
 type TPanelScenesProps = { items: any[]; parentName: string };
 
@@ -20,42 +19,48 @@ const PanelScenes = ({ items = [], parentName }: TPanelScenesProps) => {
   const { generatedColors } = useTheme();
 
   return (
-    <StyledSceneTabs
-      activeKey={IDS[0]}
-      tabBarGutter={0}
-      tabBarStyle={{ margin: 0 }}
-      items={items.map((item, index) => ({
-        key: String(item.id),
-        label: (
-          <Link href={`/${parentName}/${item.id}`}>
-            <Flex vertical>
-              <NImage src={item.src} alt="" fill quality={1}></NImage>
-              <div className="actions-b">
-                <Typography.Text strong className="title" style={{ color: "#fff" }}>
-                  {item.label}
-                </Typography.Text>
-              </div>
+    <StyledSceneTabs activeKey={IDS[0]} activeLineMode="full">
+      {items.map((item, index) => (
+        <Tabs.Tab
+          key={item.id}
+          title={
+            <Link href={`/${parentName}/${item.id}`}>
+              <Flex vertical>
+                <NImage src={item.src} alt="" fill quality={1}></NImage>
+                <div className="actions-b">
+                  <span className="title" style={{ color: "#fff", fontSize: 14, fontWeight: 600 }}>
+                    {item.label}
+                  </span>
+                </div>
 
-              <div className="actions-tr">
-                <Badge
-                  status="processing"
-                  text="Đang xem"
-                  styles={{ root: { color: generatedColors[4], fontSize: 12 } }}
-                />
-              </div>
-            </Flex>
-          </Link>
-        ),
-      }))}
-    />
+                <div className="actions-tr">
+                  <Flex gap={6} align="center">
+                    <StatusProcessing />
+                    <span style={{ color: generatedColors[4], fontSize: 12 }}>Đang xem</span>
+                  </Flex>
+                </div>
+              </Flex>
+            </Link>
+          }
+        />
+      ))}
+    </StyledSceneTabs>
   );
 };
 
 const StyledSceneTabs = styled(Tabs)`
-  & .ant-tabs-tab {
+  & .adm-tabs-tab-line {
+    z-index: 10;
+    height: 3px;
+  }
+  & .adm-tabs-tab-wrapper {
+    padding: 0;
+  }
+  & .adm-tabs-tab {
     position: relative;
-    height: 100px;
+    height: 110px;
     width: fit-content;
+    width: 100%;
     min-width: 200px;
     flex-shrink: 0;
     border: 1px solid transparent;
@@ -69,7 +74,7 @@ const StyledSceneTabs = styled(Tabs)`
       bottom: 0;
       left: 0;
       width: 100%;
-      padding: 0 8px 4px 8px;
+      padding: 0 8px 6px 8px;
       height: fit-content;
       min-height: 50%;
       display: flex;
@@ -84,19 +89,11 @@ const StyledSceneTabs = styled(Tabs)`
       position: absolute;
       top: 0;
       right: 0;
-      padding: 0px 4px 0 0;
+      padding: 6px 4px 0 0;
       display: none;
-      & .ant-badge-status-processing {
-        color: ${({ theme }) => theme.colorPrimary};
-        background-color: ${({ theme }) => theme.colorPrimary};
-      }
-      & .ant-badge-status-text {
-        font-size: 12px;
-        color: ${({ theme }) => theme.generatedColors[7]};
-      }
     }
   }
-  & .ant-tabs-tab.ant-tabs-tab-active {
+  & .adm-tabs-tab.adm-tabs-tab-active {
     & .actions-tr {
       display: flex;
     }

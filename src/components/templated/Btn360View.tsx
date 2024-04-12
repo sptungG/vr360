@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { Button } from "antd-mobile";
 import React from "react";
 import { Round360Svg } from "../icons";
 import useSceneState from "@/common/useSceneState";
@@ -20,7 +20,8 @@ const Btn360View = ({}: TBtn360ViewProps) => {
   return (
     <StyledWrapper
       className="btn-360"
-      type="text"
+      fill="none"
+      color="default"
       disabled={isViewing}
       style={{ height: "fit-content", color: "#fff" }}
       onClick={() => setIsViewing(true)}

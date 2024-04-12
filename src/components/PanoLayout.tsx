@@ -19,7 +19,10 @@ type TPanoLayoutProps = {
 
 const PanoLayout = ({ src, children, actions01, autoRotate }: TPanoLayoutProps) => {
   return (
-    <StyledWrapper style={{ width: "100%", maxWidth: "100dvw" }} className={`${inter.className}`}>
+    <StyledWrapper
+      style={{ height: "100dvh", width: "100dvw", overflow: "hidden" }}
+      className={`${inter.className}`}
+    >
       <div className="actions-bc" style={{ zIndex: 20 }}>
         {actions01}
       </div>

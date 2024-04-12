@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
-import { Button, Flex, theme } from "antd";
 import Link, { LinkProps } from "next/link";
+import Flex from "../Flex";
 import { NImage } from "../Image";
 import { MarkerSvg } from "../icons";
 
@@ -9,15 +9,9 @@ type TRouteArrow01Props = LinkProps & {
 };
 
 export const RouteArrow01 = ({ href, onClick, styleImg, ...props }: TRouteArrow01Props) => {
-  const {
-    token: { colorPrimary },
-  } = theme.useToken();
-
   return (
     <Link href={href} onClick={onClick} prefetch {...props}>
-      <picture>
-        <img src="/arrow3.png" alt="" width={90} style={styleImg} />
-      </picture>
+      <NImage src="/arrow3.png" alt="" width={90} height={90} style={styleImg} />
     </Link>
   );
 };
@@ -33,10 +27,6 @@ export const RouteMarker01 = ({
   imageUrl,
   ...props
 }: TRouteMarker01Props) => {
-  const {
-    token: { colorPrimary },
-  } = theme.useToken();
-
   return (
     <StyledMarker01 href={href} onClick={onClick} prefetch {...props}>
       <Flex vertical>

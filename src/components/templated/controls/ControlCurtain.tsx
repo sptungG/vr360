@@ -1,7 +1,8 @@
-import { Form, Popover, TimePicker } from "antd";
+import { Form, Popover } from "antd-mobile";
 import React, { useState } from "react";
 import { SwitchOnOff } from "../field/Switch";
 import { create } from "zustand";
+import TimePicker from "../field/TimePicker";
 
 type TState = {
   config: any;
@@ -21,23 +22,19 @@ const ControlCurtain = ({}: TControlCurtainProps) => {
   return (
     <Form
       form={form}
-      labelCol={{ flex: "auto" }}
-      labelAlign="left"
-      labelWrap
-      wrapperCol={{ flex: "none" }}
       initialValues={config}
       onValuesChange={(_, formData) => {
         setConfig(formData);
       }}
     >
-      <Form.Item name="openTime" label="Cài đặt giờ mở" tooltip="Hẹn giờ tắt">
+      <Form.Item name="openTime" label="Cài đặt giờ mở" help="Hẹn giờ tắt">
         <TimePicker
-          variant="filled"
-          placeholder="HH:mm"
-          format={"HH:mm"}
-          minuteStep={5}
-          showNow={false}
-          inputReadOnly
+          // variant="filled"
+          // placeholder="HH:mm"
+          // format={"HH:mm"}
+          // minuteStep={5}
+          // showNow={false}
+          // inputReadOnly
         />
       </Form.Item>
 

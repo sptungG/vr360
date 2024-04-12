@@ -1,25 +1,28 @@
-import { Tooltip as AntdTooltip, TooltipProps } from "antd";
-import React from "react";
-import { colorPrimary } from "./templated/ConfigProviders";
 import { useTheme } from "@emotion/react";
+import { Popover, PopoverProps } from "antd-mobile";
+import React from "react";
 
-type TTooltipProps = TooltipProps & {};
+type TTooltipProps = PopoverProps & {
+  title?: React.ReactNode;
+};
 
-const Tooltip = ({ children, ...props }: TTooltipProps) => {
+const Tooltip = ({ children, title, content, ...props }: TTooltipProps) => {
   const { generatedColors } = useTheme();
 
   return (
-    <AntdTooltip
-      mouseEnterDelay={0.01}
-      mouseLeaveDelay={0.01}
-      color="#fff"
-      overlayInnerStyle={{ color: generatedColors[8] }}
-      arrow={{ pointAtCenter: true }}
+    <Popover
       placement="left"
+      mode="light"
+      content={
+        <>
+          {title}
+          {content}
+        </>
+      }
       {...props}
     >
       {children}
-    </AntdTooltip>
+    </Popover>
   );
 };
 

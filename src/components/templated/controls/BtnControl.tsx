@@ -1,16 +1,19 @@
 import { AnimatePulse } from "@/common/emotion-keyframes";
 import styled from "@emotion/styled";
-import { Button, ButtonProps } from "antd";
+import { Button, ButtonProps } from "antd-mobile";
 import React from "react";
 
 type TBtnControlProps = Pick<
   ButtonProps,
-  "type" | "children" | "icon" | "style" | "onClick" | "className" | "classNames"
-> & {};
+  "color" | "fill" | "size" | "children" | "style" | "onClick" | "className" | "shape"
+> & {
+  icon?: React.ReactNode;
+};
 
-export const BtnControl = ({ children, ...props }: TBtnControlProps) => {
+export const BtnControl = ({ children, icon, ...props }: TBtnControlProps) => {
   return (
-    <StyledBtnControl type="text" htmlType="button" {...props}>
+    <StyledBtnControl fill="none" shape="rounded" type="button" {...props}>
+      {icon}
       {children}
     </StyledBtnControl>
   );
@@ -22,12 +25,15 @@ const StyledBtnControl = styled(Button)`
 
 export type TBtnHotspotProps = Pick<
   ButtonProps,
-  "type" | "children" | "icon" | "style" | "onClick" | "className" | "classNames"
-> & {};
+  "color" | "fill" | "size" | "children" | "style" | "onClick" | "className" | "shape"
+> & {
+  icon?: React.ReactNode;
+};
 
-export const BtnHotspot = ({ children, ...props }: TBtnHotspotProps) => {
+export const BtnHotspot = ({ children, icon, ...props }: TBtnHotspotProps) => {
   return (
-    <StyledBtnHotspot htmlType="button" icon={<></>} type="primary" {...props}>
+    <StyledBtnHotspot type="button" shape="rounded" color="primary" {...props}>
+      {icon}
       {children}
     </StyledBtnHotspot>
   );
