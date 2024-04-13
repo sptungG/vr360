@@ -16,8 +16,8 @@ import { rgba } from "emotion-rgba";
 
 type TState = {
   open?: boolean;
-  currentTab: string;
-  setCurrentTab: (s: string) => void;
+  currentTab?: string;
+  setCurrentTab: (s?: string) => void;
   setIsOpen: (s: boolean) => void;
 };
 
@@ -38,6 +38,8 @@ const ControlPopover = ({ children }: TControlPopoverProps) => {
       afterOpenChange={(o) => {
         if (!!o) {
           setAutoRotate(false);
+        } else {
+          setCurrentTab("");
         }
       }}
       destroyTooltipOnHide
@@ -93,33 +95,40 @@ export const ControlActions = () => {
           <BtnControl className="btn btn-00" icon={<Settings2Icon size={18} />}></BtnControl>
         </ControlPopover>
       </Flex>
-      <Flex align="center" gap={2}>
-        <BtnControl
-          className={`btn btn-01 ${currentTab === "DEN" ? " btn-active" : ""}`}
-          icon={<Light01Svg fill="currentColor" style={{ width: 20, margin: "0 0 -2px" }} />}
-          onClick={() => handleOpenControl("DEN")}
-        >
-          Độ sáng
-        </BtnControl>
-        <BtnControl
-          className={`btn btn-01 ${currentTab === "DIEU-HOA" ? " btn-active" : ""}`}
-          icon={<AirVentIcon strokeWidth={1.2} color="currentColor" size={18} />}
-          onClick={() => handleOpenControl("DIEU-HOA")}
-        >
-          Điều hòa
-        </BtnControl>
-        <BtnControl
-          className={`btn btn-01 ${currentTab === "REM" ? " btn-active" : ""}`}
-          icon={<CurtainSvg fill="currentColor" style={{ width: 16 }} />}
-          onClick={() => handleOpenControl("REM")}
-        >
-          Rèm cửa
-        </BtnControl>
-      </Flex>
+      <Tabs
+        indicator={{ size: 0 }}
+        tabBarStyle={{ margin: 0 }}
+        tabBarGutter={4}
+        activeKey={currentTab}
+        defaultActiveKey={""}
+        onTabClick={(k) => {
+          handleOpenControl(k);
+        }}
+        items={[
+          {
+            key: "DEN",
+            icon: (
+              <Light01Svg fill="currentColor" style={{ width: 20, height: 20, margin: "0 0 0" }} />
+            ),
+            label: "Độ sáng",
+          },
+          {
+            key: "DIEU-HOA",
+            icon: <AirVentIcon strokeWidth={1.2} color="currentColor" size={18} />,
+            label: "Điều hòa",
+          },
+          {
+            key: "REM",
+            icon: <CurtainSvg fill="currentColor" style={{ width: 16, height: 16 }} />,
+            label: "Rèm cửa",
+          },
+        ]}
+      />
     </StyledActions>
   );
 };
 const StyledActions = styled(Flex)`
+  max-width: 100dvw;
   & .btn {
     border-radius: 100rem;
     height: 30px;
@@ -129,17 +138,41 @@ const StyledActions = styled(Flex)`
     color: ${({ theme }) => theme.generatedColors[7]};
     backdrop-filter: blur(2px);
   }
-  & .btn-01 {
-    padding: 0 8px;
-    color: ${({ theme }) => theme.generatedColors[7]};
-    backdrop-filter: blur(2px);
-    &:hover {
-      border: 1px solid ${({ theme }) => rgba(theme.generatedColors[2], 0.2)};
+  & .ant-tabs {
+    flex: 1 1 auto;
+    min-width: 0px;
+    & .ant-tabs-nav::before {
+      display: none;
     }
-    &.btn-active {
+    & .ant-tabs-tab {
+      padding: 0;
+      & .ant-tabs-tab-btn {
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 8px;
+        color: ${({ theme }) => theme.generatedColors[7]};
+        backdrop-filter: blur(2px);
+        border-radius: 100rem;
+        gap: 4px;
+        border: 1px solid transparent;
+      }
+      & .ant-tabs-tab-icon {
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+    }
+    & .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
       color: ${({ theme }) => theme.generatedColors[7]} !important;
-      border: 1px solid ${({ theme }) => rgba(theme.generatedColors[3], 0.2)} !important;
+      border-color: ${({ theme }) => rgba(theme.generatedColors[3], 0.2)} !important;
       background-color: rgba(255, 255, 255, 0.2) !important;
+    }
+    & .ant-tabs-nav-operations {
+      display: none !important;
     }
   }
 `;

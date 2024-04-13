@@ -45,18 +45,21 @@ const StyledSlider01 = styled(AntdSlider)`
     backdrop-filter: blur(2px);
     padding: 0 4px 2px;
     color: ${({ theme }) => theme.colorPrimary};
+    z-index: 1;
   }
   & .ant-slider-mark-text:first-of-type {
     transform: translateX(-25%) !important;
     font-size: 12px;
     padding: 0;
     color: currentColor;
+    z-index: 0;
   }
   & .ant-slider-mark-text:last-of-type {
     transform: translateX(-80%) !important;
     font-size: 12px;
     padding: 0;
     color: currentColor;
+    z-index: 0;
   }
 `;
 
