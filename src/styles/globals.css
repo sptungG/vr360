@@ -1,3 +1,31 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+* {
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+html {
+  touch-action: manipulation;
+}
+img,
+picture,
+video {
+  display: block;
+  max-width: 100%;
+}
+input,
+select,
+textarea {
+  outline: none;
+}
+button {
+  cursor: pointer;
+}
+
 .hidden {
   display: none;
   opacity: 0;

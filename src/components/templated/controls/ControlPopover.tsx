@@ -23,7 +23,7 @@ type TState = {
 
 export const useControlState = create<TState>()((set) => ({
   open: false,
-  currentTab: "DEN",
+  currentTab: "",
   setCurrentTab: (s) => set({ currentTab: s }),
   setIsOpen: (s) => set({ open: !!s }),
 }));
