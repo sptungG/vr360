@@ -134,6 +134,7 @@ function Page() {
                 disablePictureInPicture
                 muted
                 loop
+                playsInline
                 controlsList="nodownload noremoteplayback noplaybackrate foobar"
               ></video>
             </StyledVideo01>
