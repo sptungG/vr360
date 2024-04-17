@@ -1,54 +1,26 @@
 import useSceneState from "@/common/useSceneState";
+import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
+import { Badge, Button, ButtonProps, DrawerProps, Flex, Form, Tabs, Typography, theme } from "antd";
 import {
-  Badge,
-  Button,
-  ButtonProps,
-  Card,
-  Carousel,
-  Divider,
-  DrawerProps,
-  Flex,
-  Form,
-  Pagination,
-  Tabs,
-  Typography,
-  theme,
-} from "antd";
-import {
-  ArrowRightFromLineIcon,
   BadgePercent,
-  CircleChevronRightIcon,
   GalleryHorizontalIcon,
   HeartIcon,
   MessageCircleMoreIcon,
-  PanelBottomCloseIcon,
   PanelBottomOpenIcon,
-  PanelTopOpenIcon,
-  PlusIcon,
   Rotate3DIcon,
-  ShoppingCartIcon,
-  SquareCheckBigIcon,
   StoreIcon,
 } from "lucide-react";
 import { useId, useState } from "react";
+import { usePrevious } from "react-use";
 import DrawerBottom from "../DrawerBottom";
 import Tooltip from "../Tooltip";
 import Avatar from "./Avatar";
-import { useTheme } from "@emotion/react";
-import { SCENES } from "@/common/data";
-import ScrollBar from "./ScrollBar";
-import { formatCurrency, formatNumber } from "@/common/utils";
-import { rgba } from "emotion-rgba";
-import { PlusOutlined } from "@ant-design/icons";
-import { PromotionSvg } from "../icons";
-import Image, { NImage } from "../Image";
-import PanelPromo from "./tabs/PanelPromo";
-import PanelItems from "./tabs/PanelItems";
-import PanelScenes from "./tabs/PanelScenes";
 import PanelBookingTable from "./tabs/PanelBookingTable";
+import PanelItems from "./tabs/PanelItems";
 import PanelOrder from "./tabs/PanelOrder";
-import { usePrevious } from "react-use";
+import PanelPromo from "./tabs/PanelPromo";
+import PanelScenes from "./tabs/PanelScenes";
 
 type TControlBar01Props = DrawerProps & {};
 
@@ -70,7 +42,7 @@ const ControlBar01 = ({ children, ...props }: TControlBar01Props) => {
   const [count02, setCount02] = useState(1);
 
   return (
-    <>
+    <StyledWrapper id={uid + "WRAPPER"}>
       <StyledTitle
         className="left"
         align="start"
@@ -155,7 +127,7 @@ const ControlBar01 = ({ children, ...props }: TControlBar01Props) => {
           </Tooltip>
         </Flex>
       </StyledTitle>
-      <StyleWrapper
+      <StyledDrawer
         open
         width={720}
         styles={{
@@ -166,6 +138,7 @@ const ControlBar01 = ({ children, ...props }: TControlBar01Props) => {
               selectedTab === "khu-vuc" ? "rgba(255, 255, 255, 0.8)" : "rgba(255, 255, 255, 0.8)",
           },
         }}
+        getContainer={() => document?.getElementById(uid + "WRAPPER") || document.body}
         title={
           <StyledTabsNav01
             tabBarStyle={{
@@ -235,8 +208,8 @@ const ControlBar01 = ({ children, ...props }: TControlBar01Props) => {
         {selectedTab === "dat-do-an" && <PanelOrder />}
         {/*  */}
         {selectedTab === "dat-ban" && <PanelBookingTable />}
-      </StyleWrapper>
-    </>
+      </StyledDrawer>
+    </StyledWrapper>
   );
 };
 
@@ -313,7 +286,17 @@ const StyleButton01 = styled(Button)`
   }
 `;
 
-const StyleWrapper = styled(DrawerBottom)`
+const StyledWrapper = styled.div`
+  position: relative;
+  height: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  max-width: 720px;
+  z-index: 10000;
+`;
+
+const StyledDrawer = styled(DrawerBottom)`
   & .ant-drawer-content-wrapper {
     border-radius: 10px 10px 0 0;
     overflow: hidden;

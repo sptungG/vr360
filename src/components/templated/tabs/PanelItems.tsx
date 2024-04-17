@@ -218,7 +218,6 @@ const StyledTabs01 = styled(Tabs)`
 
 const StyledPanel01 = styled(ScrollBar)`
   height: 500px;
-  /* height: 100%; */
   overflow-y: auto;
   & .nav-top-wrapper {
   }

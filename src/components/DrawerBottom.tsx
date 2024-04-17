@@ -1,4 +1,7 @@
 import { Drawer as AntdDrawer, DrawerProps } from "antd";
+import { useMeasure } from "react-use";
+import ScrollBar from "./templated/ScrollBar";
+import styled from "@emotion/styled";
 
 type TDrawerProps = DrawerProps & {};
 
@@ -11,6 +14,8 @@ const DrawerBottom = ({
   ...props
 }: TDrawerProps) => {
   const { wrapper, ...restStyles } = styles;
+  const [childRef, { width: childWidth, height: childHeight }] = useMeasure<HTMLDivElement>();
+  console.log("childHeight:", childHeight)
   return (
     <AntdDrawer
       placement="bottom"
@@ -18,11 +23,12 @@ const DrawerBottom = ({
       maskClosable={false}
       rootClassName={className}
       push={false}
+      panelRef={childRef}
       styles={{
         wrapper: {
           width,
-          height: "fit-content",
-          minHeight: 142,
+          height: 'auto',
+          minHeight: childHeight || 146,
           margin: "0 auto",
           ...wrapper,
         },
@@ -34,5 +40,14 @@ const DrawerBottom = ({
     </AntdDrawer>
   );
 };
+
+const StyledWrapper = styled.div`
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
 
 export default DrawerBottom;
