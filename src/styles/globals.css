@@ -12,7 +12,7 @@ html {
   touch-action: manipulation;
 }
 html {
-  background-color: red;
+  background-color: transparent;
   overflow: hidden;
   width: 100%;
 }
@@ -21,7 +21,7 @@ body {
   height: 100%;
   position: fixed;
   /* prevent overscroll bounce*/
-  background-color: lightgreen;
+  background-color: transparent;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   /* iOS velocity scrolling */
