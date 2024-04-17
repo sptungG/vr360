@@ -2,15 +2,7 @@ import { TScene, getSceneById } from "@/common/data";
 import PanoScene from "@/components/PanoScene";
 import * as TComponents from "@/components/templated";
 import styled from "@emotion/styled";
-import {
-  ContactShadows,
-  Environment,
-  GizmoHelper,
-  GizmoViewcube,
-  GizmoViewport,
-  OrbitControls,
-  Preload,
-} from "@react-three/drei";
+import { OrbitControls, Preload } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 
 import Html from "@/common/Html";
@@ -18,21 +10,9 @@ import useSceneState from "@/common/useSceneState";
 import Tooltip from "@/components/Tooltip";
 import BtnHotspot from "@/components/templated/BtnHotspot";
 import ControlBar01 from "@/components/templated/ControlBar01";
-import {
-  ArrowLeftIcon,
-  ArrowRightIcon,
-  BookOpenTextIcon,
-  CakeSliceIcon,
-  CoffeeIcon,
-  LayoutGridIcon,
-} from "lucide-react";
+import { BookOpenTextIcon, CoffeeIcon, LayoutGridIcon } from "lucide-react";
 import { Inter } from "next/font/google";
 import { Suspense, useId, useState } from "react";
-import { useInterval } from "react-use";
-import { Button, Flex } from "antd";
-import { Round360Svg } from "@/components/icons";
-import { AnimatePulse2 } from "@/common/emotion-keyframes";
-import Btn360View from "@/components/templated/Btn360View";
 
 const inter = Inter({ subsets: ["latin"] });
 
