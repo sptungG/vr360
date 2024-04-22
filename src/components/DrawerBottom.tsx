@@ -15,7 +15,6 @@ const DrawerBottom = ({
 }: TDrawerProps) => {
   const { wrapper, ...restStyles } = styles;
   const [childRef, { width: childWidth, height: childHeight }] = useMeasure<HTMLDivElement>();
-  console.log("childHeight:", childHeight)
   return (
     <AntdDrawer
       placement="bottom"

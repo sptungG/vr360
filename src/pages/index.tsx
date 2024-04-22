@@ -46,7 +46,7 @@ function Page() {
   };
 
   return (
-    <StyledWrapper style={{ width: "100%", maxWidth: "732px" }} className={`${inter.className}`}>
+    <StyledWrapper style={{ width: "100%", maxWidth: "100dvw" }} className={`${inter.className}`}>
       <div className="actions-bc" style={{ zIndex: 20 }}>
         <ControlBar01 />
       </div>

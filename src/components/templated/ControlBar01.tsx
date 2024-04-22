@@ -83,48 +83,48 @@ const ControlBar01 = ({ children, ...props }: TControlBar01Props) => {
           thế giới để thưởng thức các món ăn chất lượng cao, hương vị tuyệt hảo và giá cả phải
           chăng.
         </Typography.Paragraph>
-      </StyledTitle>
-      <StyledTitle className="right" vertical align="end" gap={20} style={{ width: 48 }}>
-        <Flex gap={12} vertical>
-          <ButtonBadge
-            type="text"
-            size="small"
-            style={{ color: colorBgBase }}
-            icon={<HeartIcon size={21} />}
-            count={count01}
-            onClick={() => setCount01((p) => p + 1)}
-          />
-
-          <ButtonBadge
-            type="text"
-            size="small"
-            style={{ color: colorBgBase }}
-            icon={<MessageCircleMoreIcon size={21} />}
-            count={count02}
-            onClick={() => setCount02((p) => p + 1)}
-          />
-        </Flex>
-
-        <Flex align="center" vertical style={{ margin: "auto 0 0 0" }} gap={10}>
-          <Tooltip title="Tự động xoay">
-            <Button
-              type="text"
-              size="small"
-              icon={<Rotate3DIcon size={21} />}
-              style={{ color: autoRotate ? colorPrimary : colorBgBase }}
-              onClick={() => setAutoRotate(!autoRotate)}
-            ></Button>
-          </Tooltip>
-          <Tooltip title="Mở rộng">
-            <Button
+        <Flex vertical align="end" gap={20} style={{ width: 48 }} className="actions-l-b">
+          <Flex gap={12} vertical>
+            <ButtonBadge
               type="text"
               size="small"
               style={{ color: colorBgBase }}
-              icon={<PanelBottomOpenIcon size={22} />}
-              // type={isAutoRotate ? "primary" : "default"}
-              // onClick={() => setIsAutoRotate((prev) => !prev)}
-            ></Button>
-          </Tooltip>
+              icon={<HeartIcon size={21} />}
+              count={count01}
+              onClick={() => setCount01((p) => p + 1)}
+            />
+
+            <ButtonBadge
+              type="text"
+              size="small"
+              style={{ color: colorBgBase }}
+              icon={<MessageCircleMoreIcon size={21} />}
+              count={count02}
+              onClick={() => setCount02((p) => p + 1)}
+            />
+          </Flex>
+
+          <Flex align="center" vertical style={{ margin: "auto 0 0 0" }} gap={10}>
+            <Tooltip title="Tự động xoay">
+              <Button
+                type="text"
+                size="small"
+                icon={<Rotate3DIcon size={21} />}
+                style={{ color: autoRotate ? colorPrimary : colorBgBase }}
+                onClick={() => setAutoRotate(!autoRotate)}
+              ></Button>
+            </Tooltip>
+            <Tooltip title="Mở rộng">
+              <Button
+                type="text"
+                size="small"
+                style={{ color: colorBgBase }}
+                icon={<PanelBottomOpenIcon size={22} />}
+                // type={isAutoRotate ? "primary" : "default"}
+                // onClick={() => setIsAutoRotate((prev) => !prev)}
+              ></Button>
+            </Tooltip>
+          </Flex>
         </Flex>
       </StyledTitle>
       <StyledDrawer
@@ -217,10 +217,17 @@ const StyledTitle = styled(Flex)`
   position: fixed;
   bottom: 148px;
   &.left {
-    left: 0;
-    width: calc(100% - 40px);
-    padding-left: 6px;
+    width: 100%;
+    padding: 0 48px 0 6px;
     max-width: 720px;
+    left: 50%;
+    transform: translateX(-50%);
+    & .actions-l-b {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      padding: 0 6px 2px 0;
+    }
   }
   &.right {
     right: 0;
