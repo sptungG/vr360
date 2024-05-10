@@ -106,21 +106,9 @@ export const ControlActions = () => {
         }}
         items={[
           {
-            key: "DEN",
-            icon: (
-              <Light01Svg fill="currentColor" style={{ width: 20, height: 20, margin: "0 0 0" }} />
-            ),
-            label: "Độ sáng",
-          },
-          {
             key: "DIEU-HOA",
             icon: <AirVentIcon strokeWidth={1.2} color="currentColor" size={18} />,
             label: "Điều hòa",
-          },
-          {
-            key: "REM",
-            icon: <CurtainSvg fill="currentColor" style={{ width: 16, height: 16 }} />,
-            label: "Rèm cửa",
           },
         ]}
       />

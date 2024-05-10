@@ -1,4 +1,4 @@
-import useSceneState, { LIST_SCENE_00, LIST_SCENE_01 } from "@/common/useSceneState";
+import useSceneState, { LIST_SCENE_01 } from "@/common/useSceneState";
 import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 import { Badge, Button, ButtonProps, DrawerProps, Flex, Form, Tabs, theme } from "antd";
@@ -79,19 +79,10 @@ const ControlBar01 = ({ children, extraTitle, ...props }: TControlBar01Props) =>
             }
             items={[
               {
-                key: "livingroom",
+                key: "hospital",
                 label: (
                   <>
-                    Phòng khách
-                    <Badge count={LIST_SCENE_00.length} overflowCount={99} />
-                  </>
-                ),
-              },
-              {
-                key: "master-bedroom",
-                label: (
-                  <>
-                    Phòng ngủ Master
+                    Các không gian
                     <Badge count={LIST_SCENE_01.length} overflowCount={99} />
                   </>
                 ),
@@ -104,11 +95,8 @@ const ControlBar01 = ({ children, extraTitle, ...props }: TControlBar01Props) =>
           />
         }
       >
-        <If condition={selectedTab === "livingroom"}>
-          <PanelScenes items={LIST_SCENE_00} parentName="livingroom" />
-        </If>
-        <If condition={selectedTab === "master-bedroom"}>
-          <PanelScenes items={LIST_SCENE_01} parentName="master-bedroom" />
+        <If condition={selectedTab === "hospital"}>
+          <PanelScenes items={LIST_SCENE_01} parentName="hospital" />
         </If>
       </StyleDrawer>
     </StyledWrapper>
